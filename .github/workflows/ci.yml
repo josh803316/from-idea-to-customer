@@ -31,7 +31,7 @@ jobs:
         run: bun run --cwd packages/web typecheck
         env:
           # Astro check needs a site URL to generate canonical links
-          SITE_URL: https://fromideatocustomer.com
+          SITE_URL: https://from-idea-to-customer.vercel.app
 
       - name: Unit tests (api)
         run: bun run --cwd packages/api test
