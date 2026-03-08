@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/home/Hero.astro';
 import FeatureGrid from '@/components/home/FeatureGrid.astro';
+import ChessBoard3D from '@/components/home/ChessBoard3D';
 import CaseStudy from '@/components/home/CaseStudy.astro';
 import LiveMetrics from '@/components/home/LiveMetrics';
 import SiteAgent from '@/components/home/SiteAgent';
@@ -14,6 +15,7 @@ import WaitlistForm from '@/components/home/WaitlistForm';
 >
   <Hero />
   <FeatureGrid />
+  <ChessBoard3D client:load />
 
   <CaseStudy>
     <LiveMetrics client:load />
