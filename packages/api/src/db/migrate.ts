@@ -24,11 +24,7 @@ const pool = new pg.Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-// Bun exposes import.meta.dir; Node.js polyfill via URL if needed.
-const migrationsDir = join(
-  typeof import.meta.dir !== 'undefined' ? import.meta.dir : new URL('.', import.meta.url).pathname,
-  '../../db/migrations',
-);
+const migrationsDir = join(new URL('.', import.meta.url).pathname, '../../db/migrations');
 
 async function migrate(): Promise<void> {
   const client = await pool.connect();

@@ -3,6 +3,7 @@ import { upsertProgress, getProgress } from '../queries/progress.queries.ts';
 import { optionalAuth } from '../middleware/auth.ts';
 
 export const progressRoute = new Elysia()
+  .derive(optionalAuth)
   .post(
     '/progress/sync',
     async ({ body, user }) => {
@@ -16,7 +17,6 @@ export const progressRoute = new Elysia()
       return { success: true, progress };
     },
     {
-      beforeHandle: [optionalAuth],
       body: t.Object({
         sessionId: t.String({ minLength: 1 }),
         courseSlug: t.String({ minLength: 1 }),
@@ -36,7 +36,6 @@ export const progressRoute = new Elysia()
       return { progress };
     },
     {
-      beforeHandle: [optionalAuth],
       query: t.Object({
         sessionId: t.Optional(t.String()),
       }),
