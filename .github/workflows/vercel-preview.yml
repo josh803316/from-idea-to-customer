@@ -22,24 +22,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.BUN_AUTH_TOKEN }}
 
+      - name: Build
+        run: bun run --cwd packages/web build
+        env:
+          PUBLIC_NEON_AUTH_URL: ${{ secrets.PUBLIC_NEON_AUTH_URL }}
+          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
+          SITE_URL: https://from-idea-to-customer.vercel.app
+
       - name: Link Vercel project
         run: |
           mkdir -p packages/web/.vercel
           echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' > packages/web/.vercel/project.json
-
-      - name: Pull Vercel environment variables
-        run: npx vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: packages/web
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Build
-        run: npx vercel build --token=${{ secrets.VERCEL_TOKEN }}
-        working-directory: packages/web
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Deploy
         id: deploy
