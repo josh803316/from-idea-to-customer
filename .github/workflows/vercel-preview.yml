@@ -27,6 +27,7 @@ jobs:
         env:
           PUBLIC_NEON_AUTH_URL: ${{ secrets.PUBLIC_NEON_AUTH_URL }}
           PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
+          PUBLIC_GA4_MEASUREMENT_ID: G-NYSM92EDYD
           SITE_URL: https://from-idea-to-customer.vercel.app
 
       - name: Link Vercel project
