@@ -41,7 +41,7 @@ function buildInput(history: Message[], message: string): string {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  const apiKey = import.meta.env.YOU_API_KEY;
+  const apiKey = import.meta.env.YOU_API_KEY ?? process.env.YOU_API_KEY;
 
   if (!apiKey) {
     return new Response(
