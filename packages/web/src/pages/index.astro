@@ -2,6 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/home/Hero.astro';
 import FeatureGrid from '@/components/home/FeatureGrid.astro';
+import CaseStudy from '@/components/home/CaseStudy.astro';
+import SiteAgent from '@/components/home/SiteAgent';
 import WaitlistForm from '@/components/home/WaitlistForm';
 ---
 
@@ -11,6 +13,8 @@ import WaitlistForm from '@/components/home/WaitlistForm';
 >
   <Hero />
   <FeatureGrid />
+  <CaseStudy />
+  <SiteAgent client:load />
 
   <section class="py-16 text-center border-t border-gray-100">
     <h2 class="text-2xl font-bold text-gray-900 mb-3">New modules dropping regularly</h2>
