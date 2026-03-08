@@ -3,7 +3,6 @@ import BaseLayout from './BaseLayout.astro';
 import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import MarkCompleteButton from '@/components/lesson/MarkCompleteButton';
-import { parseProgress, isLessonComplete } from '@/lib/progress';
 
 interface Props {
   title: string;
@@ -28,10 +27,6 @@ const {
   estimatedMinutes,
   objectives,
 } = Astro.props;
-
-const progressCookie = Astro.cookies.get('fitc_progress')?.value;
-const progressStore = parseProgress(progressCookie);
-const completed = isLessonComplete(progressStore, courseSlug, lessonSlug);
 
 const crumbs = [
   { label: 'Courses', href: '/courses' },
@@ -88,7 +83,6 @@ const crumbs = [
         client:load
         courseSlug={courseSlug}
         lessonSlug={lessonSlug}
-        initialCompleted={completed}
       />
     </div>
   </div>

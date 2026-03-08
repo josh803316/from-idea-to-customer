@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
-import { parseProgress, getCourseCompletion } from '@/lib/progress';
+import CourseProgress from '@/components/course/CourseProgress';
 
 export async function getStaticPaths() {
   const courses = await getCollection('courses', ({ data }) => !data.draft);
@@ -22,10 +22,6 @@ const allModules = (
 const allLessons = (
   await getCollection('lessons', ({ data }) => data.courseSlug === course.slug && !data.draft)
 ).sort((a, b) => a.data.order - b.data.order);
-
-const progressCookie = Astro.cookies.get('fitc_progress')?.value;
-const progressStore = parseProgress(progressCookie);
-const completionPct = getCourseCompletion(progressStore, course.slug, allLessons.length);
 
 const crumbs = [
   { label: 'Courses', href: '/courses' },
@@ -55,20 +51,7 @@ const crumbs = [
     <h1 class="text-4xl font-bold text-gray-900 mb-4">{course.data.title}</h1>
     <p class="text-xl text-gray-600 mb-8">{course.data.description}</p>
 
-    {completionPct > 0 && (
-      <div class="mb-8">
-        <div class="flex justify-between text-sm text-gray-600 mb-1">
-          <span>Your progress</span>
-          <span>{completionPct}%</span>
-        </div>
-        <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-brand-500 rounded-full transition-all"
-            style={`width: ${completionPct}%`}
-          />
-        </div>
-      </div>
-    )}
+    <CourseProgress client:load courseSlug={course.slug} totalLessons={allLessons.length} />
 
     <div class="space-y-8">
       {allModules.map((mod) => {

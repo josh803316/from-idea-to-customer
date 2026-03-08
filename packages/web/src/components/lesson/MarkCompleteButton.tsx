@@ -9,17 +9,26 @@
  * This single component works correctly in both states with no extra config.
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { authClient } from '@/lib/auth';
+import { parseProgress, isLessonComplete } from '@/lib/progress';
 
 interface Props {
   courseSlug: string;
   lessonSlug: string;
-  initialCompleted?: boolean;
 }
 
-export default function MarkCompleteButton({ courseSlug, lessonSlug, initialCompleted = false }: Props) {
-  const [completed, setCompleted] = useState(initialCompleted);
+export default function MarkCompleteButton({ courseSlug, lessonSlug }: Props) {
+  const [completed, setCompleted] = useState(false);
+
+  useEffect(() => {
+    const cookieValue = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('fitc_progress='))
+      ?.split('=')[1];
+    const store = parseProgress(cookieValue);
+    setCompleted(isLessonComplete(store, courseSlug, lessonSlug));
+  }, [courseSlug, lessonSlug]);
   const [loading, setLoading] = useState(false);
 
   async function handleClick() {
