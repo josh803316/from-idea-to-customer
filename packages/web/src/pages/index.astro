@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/home/Hero.astro';
 import FeatureGrid from '@/components/home/FeatureGrid.astro';
 import CaseStudy from '@/components/home/CaseStudy.astro';
+import LiveMetrics from '@/components/home/LiveMetrics';
 import SiteAgent from '@/components/home/SiteAgent';
 import WaitlistForm from '@/components/home/WaitlistForm';
 ---
@@ -13,7 +14,11 @@ import WaitlistForm from '@/components/home/WaitlistForm';
 >
   <Hero />
   <FeatureGrid />
-  <CaseStudy />
+
+  <CaseStudy>
+    <LiveMetrics client:load />
+  </CaseStudy>
+
   <SiteAgent client:load />
 
   <section class="py-16 text-center border-t border-gray-100">

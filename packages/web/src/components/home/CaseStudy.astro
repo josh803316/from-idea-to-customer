@@ -1,82 +1,12 @@
 ---
 // CaseStudy.astro
-// This section uses the site itself as the teaching artifact.
-// Every metric shown here is a real category engineers should optimise for
-// when monetising via advertising (CPM revenue scales directly with traffic quality).
-
-const metrics = [
-  {
-    category: 'SEO',
-    grade: 'B+',
-    score: 82,
-    color: 'text-amber-600 bg-amber-50 border-amber-200',
-    bar: 'bg-amber-400',
-    items: [
-      { label: 'Semantic HTML structure', status: 'pass' },
-      { label: 'Canonical URLs on all pages', status: 'pass' },
-      { label: 'Open Graph + Twitter Card tags', status: 'pass' },
-      { label: 'Structured data (schema.org)', status: 'warn' },
-      { label: 'Meta descriptions on module pages', status: 'warn' },
-      { label: 'Sitemap auto-generated', status: 'pass' },
-    ],
-    insight: 'Adding JSON-LD to module & lesson pages could push this to A. Each structured data entity signals educational content to search engines.',
-  },
-  {
-    category: 'Page Performance',
-    grade: 'A',
-    score: 96,
-    color: 'text-green-700 bg-green-50 border-green-200',
-    bar: 'bg-green-500',
-    items: [
-      { label: 'LCP: 1.1s (target ≤2.5s)', status: 'pass' },
-      { label: 'INP: 45ms (target ≤200ms)', status: 'pass' },
-      { label: 'CLS: 0.02 (target ≤0.1)', status: 'pass' },
-      { label: 'First Byte: 180ms', status: 'pass' },
-      { label: 'Images: WebP + lazy load', status: 'pass' },
-      { label: 'Zero client-side JS on static pages', status: 'pass' },
-    ],
-    insight: 'Astro\'s static-first output delivers near-perfect Lighthouse scores. Speed matters: a 1s delay costs ~7% conversions and tanks ad CPM.',
-  },
-  {
-    category: 'User Engagement',
-    grade: 'C+',
-    score: 61,
-    color: 'text-blue-700 bg-blue-50 border-blue-200',
-    bar: 'bg-blue-500',
-    items: [
-      { label: 'Avg time on lesson pages: 4:32', status: 'pass' },
-      { label: 'Module completion rate: 38%', status: 'warn' },
-      { label: 'Return visitor rate: 22%', status: 'warn' },
-      { label: 'Bounce rate: 61%', status: 'warn' },
-      { label: 'Internal link depth: 1.8 avg', status: 'warn' },
-      { label: 'Email capture rate: 3.1%', status: 'warn' },
-    ],
-    insight: 'This is the biggest growth lever for ad revenue. Longer sessions = more ad impressions. Internal linking and completion prompts are quick wins.',
-  },
-  {
-    category: 'Responsive Design',
-    grade: 'A-',
-    score: 91,
-    color: 'text-purple-700 bg-purple-50 border-purple-200',
-    bar: 'bg-purple-500',
-    items: [
-      { label: 'Mobile (375px): fully responsive', status: 'pass' },
-      { label: 'Tablet (768px): fully responsive', status: 'pass' },
-      { label: 'Desktop (1440px): optimal layout', status: 'pass' },
-      { label: 'Touch targets ≥44px', status: 'pass' },
-      { label: 'Code blocks: horizontal scroll', status: 'pass' },
-      { label: 'Navigation: mobile hamburger', status: 'warn' },
-    ],
-    insight: '65% of educational content is consumed on mobile. The nav lacks a hamburger menu on small screens — a quick win that could drop bounce rate by 8–12%.',
-  },
-];
+// Framing for the live metrics section. The actual numbers come from LiveMetrics.tsx.
 
 const monetisationGoal = {
   model: 'Ad Revenue (CPM)',
-  mechanism: 'Volume × Quality',
   targets: [
     { label: 'Monthly unique visitors', value: '50K', note: 'to hit $500/mo at $10 CPM' },
-    { label: 'Avg pages per session', value: '3.2', note: 'current estimate' },
+    { label: 'Avg pages per session', value: '3.5+', note: 'target — currently ~1.8' },
     { label: 'Session duration target', value: '>5 min', note: 'signals quality to ad networks' },
     { label: 'Organic search share', value: '70%+', note: 'goal — paid is not profitable at our scale' },
   ],
@@ -91,31 +21,28 @@ const monetisationGoal = {
       <span>Live case study &mdash; this site, right now</span>
     </div>
     <h2 class="text-4xl font-bold text-gray-900 mb-4">
-      The site you're reading is the example.
+      The site you&rsquo;re reading is the example.
     </h2>
     <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-4">
-      We're building <em>From Idea to Customer</em> to monetise via advertising. That means
-      traffic volume × quality = revenue. Every engineering and content decision we make
+      We&rsquo;re building <em>From Idea to Customer</em> to monetise via advertising. That means
+      traffic volume &times; quality = revenue. Every engineering and content decision we make
       is measured against that goal.
     </p>
     <p class="text-gray-500 max-w-2xl mx-auto">
-      Below is a live dashboard of how we're performing across the four domains that
-      determine whether an ad-supported site succeeds or fails. Use the AI agent at the
-      bottom to interrogate any metric, propose improvements, or ask why we made a
-      specific trade-off.
+      Below are the real numbers — live Lighthouse scores and Google Analytics data — for
+      this site right now. Use the AI agent at the bottom to interrogate any metric,
+      propose an improvement, or challenge our assumptions.
     </p>
   </div>
 
   <!-- Monetisation goal banner -->
-  <div class="bg-gray-900 text-white rounded-2xl p-8 mb-12">
+  <div class="bg-gray-900 text-white rounded-2xl p-8 mb-10">
     <div class="flex flex-col lg:flex-row lg:items-center gap-6">
       <div class="flex-1">
         <p class="text-brand-400 text-sm font-medium mb-1 uppercase tracking-wider">Business model</p>
-        <h3 class="text-2xl font-bold mb-2">
-          {monetisationGoal.model}
-        </h3>
+        <h3 class="text-2xl font-bold mb-2">{monetisationGoal.model}</h3>
         <p class="text-gray-400">
-          Revenue = CPM rate × (monthly impressions / 1000).
+          Revenue = CPM rate &times; (monthly impressions / 1000).
           CPM improves with session quality; impressions grow with unique visitors.
           Both are engineering and content problems.
         </p>
@@ -132,73 +59,22 @@ const monetisationGoal = {
     </div>
   </div>
 
-  <!-- Metrics grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
-    {metrics.map((m) => (
-      <div class={`rounded-2xl border p-6 ${m.color}`}>
-        <div class="flex items-start justify-between mb-4">
-          <div>
-            <h3 class="font-semibold text-gray-900 text-lg">{m.category}</h3>
-            <div class="flex items-center gap-3 mt-1">
-              <span class="text-3xl font-bold">{m.grade}</span>
-              <span class="text-sm text-gray-500">{m.score}/100</span>
-            </div>
-          </div>
-          <div class="w-16 h-16 relative flex-shrink-0">
-            <!-- Circular progress indicator (SVG) -->
-            <svg viewBox="0 0 36 36" class="w-16 h-16 -rotate-90">
-              <circle cx="18" cy="18" r="15.9" fill="none" stroke="currentColor" stroke-width="2" class="opacity-10" />
-              <circle
-                cx="18" cy="18" r="15.9"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-dasharray={`${m.score} ${100 - m.score}`}
-                stroke-linecap="round"
-              />
-            </svg>
-            <span class="absolute inset-0 flex items-center justify-center text-xs font-bold">{m.score}</span>
-          </div>
-        </div>
-
-        <!-- Score bar -->
-        <div class="h-1.5 bg-black/10 rounded-full mb-5">
-          <div class={`h-1.5 rounded-full ${m.bar}`} style={`width: ${m.score}%`} />
-        </div>
-
-        <!-- Checklist -->
-        <ul class="space-y-2 mb-4">
-          {m.items.map((item) => (
-            <li class="flex items-start gap-2 text-sm">
-              <span class={`mt-0.5 flex-shrink-0 ${item.status === 'pass' ? 'text-green-600' : 'text-amber-600'}`}>
-                {item.status === 'pass' ? '✓' : '⚠'}
-              </span>
-              <span class="text-gray-700">{item.label}</span>
-            </li>
-          ))}
-        </ul>
-
-        <!-- Insight -->
-        <div class="bg-white/60 rounded-lg p-3 text-sm text-gray-700 border border-white/40">
-          <span class="font-medium">Insight: </span>{m.insight}
-        </div>
-      </div>
-    ))}
-  </div>
+  <!-- LiveMetrics island injected from index.astro -->
+  <slot />
 
   <!-- Teaching callout -->
-  <div class="bg-brand-50 border border-brand-100 rounded-2xl p-8 text-center">
+  <div class="bg-brand-50 border border-brand-100 rounded-2xl p-8 text-center mt-10">
     <h3 class="text-xl font-bold text-gray-900 mb-3">
       These numbers are the curriculum.
     </h3>
-    <p class="text-gray-600 max-w-2xl mx-auto mb-6">
-      Every grade above represents a trade-off, a constraint, or an opportunity.
-      The courses teach you to reason about each one — as a PM (what's worth building?),
-      a CTO (what's the cost?), and a marketer (what moves the needle?).
+    <p class="text-gray-600 max-w-2xl mx-auto mb-4">
+      Every score above is a real trade-off, a real constraint, or a real opportunity.
+      The courses teach you to reason about each one — as a PM (what&rsquo;s worth building?),
+      a CTO (what&rsquo;s the cost?), and a marketer (what moves the needle?).
     </p>
     <p class="text-sm text-gray-500">
-      Metrics are updated with each deployment. Ask the agent below to explain any number,
-      propose an improvement, or challenge our assumptions.
+      Lighthouse runs against the live production URL. Analytics reflects the last 30 days.
+      Ask the agent below to explain any number or propose an improvement.
     </p>
   </div>
 </section>

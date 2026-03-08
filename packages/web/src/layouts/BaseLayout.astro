@@ -22,6 +22,23 @@ const { title, description, ogImage, noindex } = Astro.props;
       href="https://fonts.bunny.net/css?family=inter:400,500,600,700&family=jetbrains-mono:400,500"
       rel="stylesheet"
     />
+    {import.meta.env.PUBLIC_GA4_MEASUREMENT_ID && (
+      <>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA4_MEASUREMENT_ID}`}
+        />
+        <script
+          is:inline
+          define:vars={{ gaId: import.meta.env.PUBLIC_GA4_MEASUREMENT_ID }}
+        >
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { window.dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body class="min-h-screen bg-white text-gray-900 antialiased">
     <header class="border-b border-gray-100">
