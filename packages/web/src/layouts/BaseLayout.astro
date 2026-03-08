@@ -29,7 +29,9 @@ const { title, description, ogImage, noindex } = Astro.props;
         <a href="/" class="font-semibold text-gray-900 hover:text-brand-600 transition-colors">
           From Idea to Customer
         </a>
-        <div class="flex items-center gap-6 text-sm">
+
+        <!-- Desktop nav -->
+        <div class="hidden sm:flex items-center gap-6 text-sm">
           <a href="/courses" class="text-gray-600 hover:text-gray-900 transition-colors">Courses</a>
           <a href="/about" class="text-gray-600 hover:text-gray-900 transition-colors">About</a>
           <a
@@ -40,8 +42,60 @@ const { title, description, ogImage, noindex } = Astro.props;
           </a>
           <AuthButton client:load />
         </div>
+
+        <!-- Mobile hamburger -->
+        <button
+          id="nav-toggle"
+          class="sm:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="block w-5 h-0.5 bg-gray-700 transition-transform" id="bar1"></span>
+          <span class="block w-5 h-0.5 bg-gray-700 transition-opacity" id="bar2"></span>
+          <span class="block w-5 h-0.5 bg-gray-700 transition-transform" id="bar3"></span>
+        </button>
       </nav>
+
+      <!-- Mobile menu panel -->
+      <div
+        id="mobile-menu"
+        class="hidden sm:hidden border-t border-gray-100 bg-white px-4 pb-4"
+      >
+        <div class="flex flex-col gap-1 pt-3">
+          <a href="/courses" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">Courses</a>
+          <a href="/about" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">About</a>
+          <a
+            href="/waitlist"
+            class="mt-2 bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 transition-colors text-center font-medium"
+          >
+            Join Waitlist
+          </a>
+        </div>
+      </div>
     </header>
+
+    <script>
+      const toggle = document.getElementById('nav-toggle');
+      const menu = document.getElementById('mobile-menu');
+      const bar1 = document.getElementById('bar1');
+      const bar2 = document.getElementById('bar2');
+      const bar3 = document.getElementById('bar3');
+
+      toggle?.addEventListener('click', () => {
+        const open = menu?.classList.toggle('hidden') === false;
+        toggle.setAttribute('aria-expanded', String(open));
+        if (open) {
+          bar1?.classList.add('rotate-45', 'translate-y-2');
+          bar2?.classList.add('opacity-0');
+          bar3?.classList.add('-rotate-45', '-translate-y-2');
+        } else {
+          bar1?.classList.remove('rotate-45', 'translate-y-2');
+          bar2?.classList.remove('opacity-0');
+          bar3?.classList.remove('-rotate-45', '-translate-y-2');
+        }
+      });
+    </script>
 
     <main class="max-w-5xl mx-auto px-4 py-12">
       <slot />
