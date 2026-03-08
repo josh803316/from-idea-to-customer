@@ -1,0 +1,20 @@
+---
+// This page is SSR so we can handle the form server-side if needed in future.
+export const prerender = false;
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import WaitlistForm from '@/components/home/WaitlistForm';
+---
+
+<BaseLayout
+  title="Join the Waitlist"
+  description="Get notified when new courses and lessons launch on From Idea to Customer."
+>
+  <div class="max-w-lg mx-auto text-center">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Join the waitlist</h1>
+    <p class="text-xl text-gray-600 mb-10">
+      New courses drop regularly. Be the first to know.
+    </p>
+    <WaitlistForm client:load source="waitlist-page" />
+  </div>
+</BaseLayout>

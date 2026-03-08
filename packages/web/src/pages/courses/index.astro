@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
+
+const courses = (await getCollection('courses', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const crumbs = [{ label: 'Courses', href: '/courses' }];
+---
+
+<BaseLayout
+  title="Courses"
+  description="Browse all courses. Learn to think like a PM, Sales Lead, and CTO."
+>
+  <Breadcrumbs crumbs={crumbs} />
+
+  <div class="mt-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Courses</h1>
+    <p class="text-xl text-gray-600 mb-12 max-w-2xl">
+      Each course teaches a slice of the product lifecycle from multiple perspectives.
+      Start anywhere, but start.
+    </p>
+
+    <div class="grid gap-6">
+      {courses.map((course) => (
+        <a
+          href={`/courses/${course.slug}`}
+          class="group block bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-brand-200 transition-all"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <h2 class="text-xl font-semibold text-gray-900 group-hover:text-brand-600 transition-colors mb-2">
+                {course.data.title}
+              </h2>
+              <p class="text-gray-600 leading-relaxed mb-4">{course.data.description}</p>
+              <div class="flex flex-wrap gap-2">
+                {course.data.roles.map((role) => (
+                  <span class="text-xs font-medium bg-gray-100 text-gray-600 px-2 py-1 rounded-full capitalize">
+                    {role === 'cto' ? 'CTO' : role === 'pm' ? 'PM' : 'Sales'}
+                  </span>
+                ))}
+                {course.data.estimatedHours && (
+                  <span class="text-xs text-gray-500">{course.data.estimatedHours}h</span>
+                )}
+              </div>
+            </div>
+            <span class="text-gray-300 group-hover:text-brand-400 transition-colors text-2xl" aria-hidden="true">
+              &rarr;
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

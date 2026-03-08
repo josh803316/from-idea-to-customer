@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import { parseProgress, getCourseCompletion } from '@/lib/progress';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('courses', ({ data }) => !data.draft);
+  return courses.map((course) => ({
+    params: { course: course.slug },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+
+const allModules = (
+  await getCollection('modules', ({ data }) => data.courseSlug === course.slug && !data.draft)
+).sort((a, b) => a.data.order - b.data.order);
+
+const allLessons = (
+  await getCollection('lessons', ({ data }) => data.courseSlug === course.slug && !data.draft)
+).sort((a, b) => a.data.order - b.data.order);
+
+const progressCookie = Astro.cookies.get('fitc_progress')?.value;
+const progressStore = parseProgress(progressCookie);
+const completionPct = getCourseCompletion(progressStore, course.slug, allLessons.length);
+
+const crumbs = [
+  { label: 'Courses', href: '/courses' },
+  { label: course.data.title, href: `/courses/${course.slug}` },
+];
+---
+
+<BaseLayout title={course.data.title} description={course.data.description}>
+  <JsonLd
+    type="Course"
+    name={course.data.title}
+    description={course.data.description}
+    url={Astro.url.href}
+  />
+
+  <Breadcrumbs crumbs={crumbs} />
+
+  <div class="mt-8 max-w-3xl">
+    <div class="flex flex-wrap gap-2 mb-4">
+      {course.data.roles.map((role) => (
+        <span class="text-xs font-medium bg-brand-50 text-brand-700 px-3 py-1 rounded-full capitalize">
+          {role === 'cto' ? 'CTO perspective' : role === 'pm' ? 'PM perspective' : 'Sales perspective'}
+        </span>
+      ))}
+    </div>
+
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">{course.data.title}</h1>
+    <p class="text-xl text-gray-600 mb-8">{course.data.description}</p>
+
+    {completionPct > 0 && (
+      <div class="mb-8">
+        <div class="flex justify-between text-sm text-gray-600 mb-1">
+          <span>Your progress</span>
+          <span>{completionPct}%</span>
+        </div>
+        <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-brand-500 rounded-full transition-all"
+            style={`width: ${completionPct}%`}
+          />
+        </div>
+      </div>
+    )}
+
+    <div class="space-y-8">
+      {allModules.map((mod) => {
+        const moduleLessons = allLessons.filter(
+          (l) => l.data.moduleSlug === mod.slug.split('/').at(-1),
+        );
+        return (
+          <div id={mod.slug.split('/').at(-1)}>
+            <h2 class="text-xl font-semibold text-gray-900 mb-1">{mod.data.title}</h2>
+            <p class="text-gray-600 text-sm mb-4">{mod.data.description}</p>
+            <ol class="space-y-2">
+              {moduleLessons.map((lesson) => {
+                const [, modSlug, lessonFile] = lesson.slug.split('/');
+                return (
+                  <li>
+                    <a
+                      href={`/courses/${course.slug}/${modSlug}/${lessonFile}`}
+                      class="flex items-center justify-between group bg-white border border-gray-100 rounded-lg px-4 py-3 hover:border-brand-200 hover:shadow-sm transition-all"
+                    >
+                      <div class="flex items-center gap-3">
+                        <span class="text-gray-400 text-sm w-6 text-right">
+                          {lesson.data.order}
+                        </span>
+                        <span class="text-gray-800 group-hover:text-brand-600 transition-colors">
+                          {lesson.data.title}
+                        </span>
+                      </div>
+                      <span class="text-gray-400 text-sm">{lesson.data.estimatedMinutes} min</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>

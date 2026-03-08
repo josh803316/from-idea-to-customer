@@ -1,0 +1,85 @@
+---
+title: "Writing a One-Page PRD"
+moduleSlug: "module-01-thinking-like-a-pm"
+courseSlug: "idea-to-customer"
+order: 2
+draft: false
+estimatedMinutes: 25
+objectives:
+  - "Write a PRD an engineer can build from in one sitting"
+  - "Define success metrics before writing requirements"
+  - "Identify what the PRD deliberately leaves out"
+---
+
+import { Aside } from '@/components/mdx/Aside.astro';
+
+## Why one page?
+
+A 20-page PRD is a failure of prioritization. If a PM can't explain what they want in one page, they don't know what they want yet.
+
+The one-page constraint forces ruthlessness. Every sentence has to earn its place.
+
+<Aside type="warning">
+Long PRDs feel thorough but they create a false sense of alignment. Engineers read the first two sections and assume they understand the rest. Keep it short enough that there's nowhere to hide.
+</Aside>
+
+## The FITC one-page PRD template
+
+```
+# [Feature Name]
+
+## Problem
+[One paragraph. JTBD statement. Who, situation, pain.]
+
+## Why now
+[One paragraph. Why is this the right moment to build this?]
+
+## Success metrics
+[2–3 measurable outcomes. How will we know it worked?]
+
+## Scope
+### In scope
+- [Bullet list of what we're building]
+
+### Out of scope
+- [Bullet list of what we're explicitly NOT building]
+
+## Open questions
+- [Things we don't know yet that could change the design]
+```
+
+That's it. Every field is mandatory. None of the sections can be skipped.
+
+## Walking through each section
+
+### Problem
+You wrote this in Lesson 1. Drop it in. If it's longer than 3 sentences, trim it.
+
+### Why now
+This is where most PRDs fall short. "Because users asked for it" is not a reason. Good answers reference:
+- A customer about to churn over this
+- A competitor who just shipped it
+- A new technical capability that makes it possible now
+- A metric that crossed a threshold
+
+### Success metrics
+Metrics must be measurable before you ship. If you can't measure it today, you can't measure success after shipping.
+
+Bad metric: "Users are happier"
+Good metric: "Friday standup prep time decreases from >15min to <5min (measured via survey)"
+
+### Scope
+The "out of scope" section is the most valuable part. It documents what you actively decided *not* to build, which prevents scope creep during engineering.
+
+### Open questions
+Honest PRDs surface uncertainty. Pretending you know everything creates hidden risks. List questions that, if answered differently, would change the design.
+
+## Exercise
+
+Take the JTBD statement you wrote in Lesson 1 and complete the full one-page PRD template. Share it with someone who wasn't in the room when you wrote the problem statement and ask: "Could you build this?"
+
+If the answer is anything other than an immediate yes, find the gap.
+
+---
+
+*Next module: Thinking Like a CTO — now that you know what to build, how do you decide how to build it?*

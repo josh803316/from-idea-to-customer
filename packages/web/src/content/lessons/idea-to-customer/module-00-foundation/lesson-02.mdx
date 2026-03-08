@@ -1,0 +1,108 @@
+---
+title: "The Conference Room Method"
+moduleSlug: "module-00-foundation"
+courseSlug: "idea-to-customer"
+order: 2
+draft: false
+estimatedMinutes: 25
+objectives:
+  - "Understand why explaining something is the best test of whether you understand it"
+  - "Apply the conference room method to a topic you think you already know"
+  - "Recognize the moment when explanation reveals a gap in your understanding"
+---
+
+import { Aside } from '@/components/mdx/Aside.astro';
+
+## A story about three weeks
+
+A new hire with no prior experience in the role was given a complex build process to execute on day one.
+
+The process was documented. There was a checklist. His job was to run the checklist each day and escalate anything that didn't work. This is how most organizations onboard people: here's the procedure, go execute it.
+
+Each afternoon, he joined his manager in a conference room. The manager asked one question: "Tell me what you worked on today."
+
+The first few days, he recited from the checklist. "I did step 4, then step 7, then step 12." The manager listened, then said something that changed how the new hire thought about learning for the rest of his career:
+
+"You're going to be working with people from every department — technical and non-technical. I need you to be able to explain what you're doing in a way any of them could understand. Walk me through it like I'm the VP of Sales."
+
+The new hire tried. He stumbled. He realized he didn't know why step 4 came before step 7. He'd just been following instructions.
+
+The manager explained it. Then the new hire tried again.
+
+After three weeks, something shifted. The new hire looked up from the checklist mid-explanation and said:
+
+*"If the reason for doing X is this, then why are we doing Y?"*
+
+In three weeks, he was thinking at a higher level than people with many years of experience. Not because he was smarter — because he had been pushed to understand *why*, while the veterans had been mimicking dogma for years without ever building the mental model.
+
+<Aside type="insight">
+The veterans weren't dumb. They just had never been asked to explain it. Once you can explain something, you stop mimicking and start thinking.
+</Aside>
+
+## Why explanation is the test
+
+You cannot explain something clearly if you don't understand it.
+
+This sounds obvious, but it isn't. You can *perform* things you don't understand. You can execute a checklist, follow a procedure, and get the right output — indefinitely — without knowing why any of it works. Organizations run on this kind of performance every day.
+
+But when you try to explain it to someone from a different department, someone without your context, someone who will ask naive questions — the performance falls apart immediately. You either understand it or you don't. The explanation is a diagnostic.
+
+The learning cycle this creates:
+
+1. Do the thing
+2. Try to explain the thing
+3. Realize you can't explain it well enough
+4. Go deeper
+5. Try again
+6. Eventually get deep enough that you start seeing inconsistencies and asking questions nobody else is asking
+
+That last step — the question nobody else is asking — is the signal that ownership has clicked. Not when you can perform the task. When you can *question* the task.
+
+## What "explaining clearly" actually means
+
+The bar is not impressing someone with your vocabulary. The bar is being understood by someone who has none of your assumptions.
+
+When the manager said "explain it like you're talking to the VP of Sales," he was naming a specific constraint: someone smart, with different domain expertise, who doesn't share your mental model. They have questions you're not expecting. They care about things you don't think to mention. They'll stop you when something doesn't make sense.
+
+This is deceptively hard. Most technical people, asked to explain something to a non-technical stakeholder, default to one of two failure modes:
+
+1. **Over-simplified**: "We're making the code better." (No useful information conveyed.)
+2. **Jargon-heavy**: "We're refactoring the authentication middleware to reduce coupling in the service layer." (Technically accurate, completely opaque to the audience.)
+
+Neither is explanation. Both are evasions of the hard work of actually translating your understanding into language the other person can build on.
+
+Real explanation requires you to understand why the concept matters, what problem it solves, and how it connects to things the other person already knows. You have to build a bridge, not just open your mouth.
+
+## The LLM as conference room partner
+
+The conference room method requires a knowledgeable person in the room — historically, the hard constraint that makes this unscalable as a learning practice.
+
+Large Language Models change this. Not perfectly, but enough to matter.
+
+Throughout this curriculum, you'll use an LLM as a conference room partner. The exercises are structured, not open-ended:
+
+- "Take the concept from this lesson and explain it to the LLM playing your VP of Sales. The VP needs to understand why it matters for the deal cycle."
+- "Present your problem statement to the LLM as your CMO and get them to approve your positioning approach."
+- "Explain your deployment process to the LLM playing a new engineer joining the team with no context."
+
+Each prompt has a specific role, a specific constraint, and a clear success criterion. "The VP approved the positioning" is a concrete result. "Go talk to the LLM about marketing" is not an exercise.
+
+<Aside type="warning">
+**Important limitation**: The LLM can be fooled by articulate nonsense in a way a real mentor cannot. It builds the muscle of explanation, but it doesn't replace the real test of being in a room with someone who can ask "wait, but why?" and genuinely not accept a non-answer. Use it as a practice environment, not an evaluator.
+</Aside>
+
+## Exercise
+
+Pick something you do regularly at work — a process, a system, a concept you think you understand.
+
+Now explain it, out loud or in writing, as if you're talking to a colleague from a completely different department who has zero shared context with you. No assumed vocabulary. No skipping steps. No "you know how X works" — assume they don't.
+
+When you hit the first moment where you can't remember why something is done a certain way, stop. That's the gap. That's where the understanding needs to go deeper.
+
+Then: before you look it up or ask someone, try to reason through it from what you do know. Formulate a hypothesis. Then check it.
+
+That sequence — not-knowing, hypothesizing, checking — is the conference room method in practice.
+
+---
+
+*Next: Bounded vs. Unbounded — the two types of problems that require completely different tools.*

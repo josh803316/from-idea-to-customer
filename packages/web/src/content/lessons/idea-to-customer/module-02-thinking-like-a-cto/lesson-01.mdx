@@ -1,0 +1,104 @@
+---
+title: "Choosing Your Tech Stack"
+moduleSlug: "module-02-thinking-like-a-cto"
+courseSlug: "idea-to-customer"
+order: 1
+draft: false
+estimatedMinutes: 30
+objectives:
+  - "Apply the three-axis framework for stack decisions"
+  - "Explain the 'boring technology' principle and when to break it"
+  - "Document a stack decision in a format your team can revisit in 18 months"
+---
+
+import { Aside } from '@/components/mdx/Aside.astro';
+
+## The question nobody asks
+
+When engineers debate tech stacks, the conversation usually sounds like this:
+
+> "I've been using Rust for my side projects and it's blazing fast."
+> "We're a TypeScript shop, let's just use what we know."
+> "Did you see that benchmark where X is 10x faster than Y?"
+
+Nobody asks: **What does the business actually need from this technology in the next 18 months?**
+
+That's the CTO question.
+
+<Aside type="insight">
+**CTOs don't pick technology. They pick constraints.** Every stack choice is a bet on which constraints matter most: hiring speed, performance, operational complexity, ecosystem maturity, team familiarity.
+</Aside>
+
+## The three-axis framework
+
+Every stack decision sits on three axes:
+
+**1. Team velocity** — How fast can *this* team ship features with this technology?
+This is not about the technology's theoretical throughput. It's about your specific team, today.
+
+**2. Operational complexity** — What does it cost to run this in production?
+Managed services reduce operational burden. Self-hosted solutions give you control but cost you time. The right answer depends on where you are in the company lifecycle.
+
+**3. Hiring surface** — Who can join this project?
+Building in Elixir might be technically optimal, but if you're in a market where 10x more engineers know TypeScript, you're creating a hiring bottleneck that will slow the company down.
+
+## The "boring technology" principle
+
+Dan McKinley's famous essay advocates for choosing boring technology. The argument:
+
+You have a limited budget of innovation tokens. Spend them on the hard problems that are *specific to your business*, not on technology choices that thousands of other companies have already validated.
+
+Using PostgreSQL isn't exciting. But it means every database problem you encounter already has a Stack Overflow answer, a consultant, and a monitoring tool. That's a feature.
+
+**When to break the rule**: When the boring option has a clear, measurable shortcoming for your specific use case. "It's slower" is not enough. "We benchmarked it and it can't handle our P99 latency requirement at our expected load" is enough.
+
+## Case study: why this site uses what it uses
+
+Let's make this concrete. Here's the stack for this very platform, and the reasoning:
+
+| Choice | Why |
+|--------|-----|
+| Bun | Consistent across all repos; familiar to the team |
+| Astro | Content-first; excellent SEO out of the box; lets us add React islands without going full SPA |
+| Elysia | Same pattern as our other APIs; good TypeScript ergonomics |
+| Neon (PostgreSQL) | Managed Postgres with zero ops overhead; scales to zero in dev |
+| Raw SQL (no ORM) | Teaching tool: every query is visible and explainable |
+| Tailwind | Team already knows it; zero context-switching |
+
+Notice what's absent from each decision: "it's the best" or "it's the fastest". Every decision is grounded in *this team*, *this moment*, *this problem*.
+
+## Documenting the decision
+
+A stack decision made verbally in a Slack thread is a decision that will be re-litigated in 12 months with no context. Document it.
+
+Use an Architecture Decision Record (ADR):
+
+```markdown
+# ADR-001: Use PostgreSQL as primary database
+
+## Status: Accepted
+
+## Context
+We need a relational database for user data and progress tracking.
+We're a team of 2 engineers who both know PostgreSQL well.
+
+## Decision
+Use Neon (managed PostgreSQL) for production, local pg for development.
+
+## Consequences
+- Zero database ops burden at this scale
+- Familiar query language for the whole team
+- If we need Redis or a graph database later, we add it — not replace PostgreSQL
+```
+
+Short. Honest about tradeoffs. Reviewable in a year.
+
+## Exercise
+
+Write an ADR for one technology decision in a project you're currently working on. If there are no decisions that need documenting, write one for a decision that was already made — reverse-engineer the context and reasoning.
+
+The goal: someone joining your team 12 months from now should be able to read your ADR and understand *why* the decision was made, not just *what* was decided.
+
+---
+
+*You've completed Module 2. Next: thinking like a Sales Lead — because a product nobody knows about is a product nobody buys.*

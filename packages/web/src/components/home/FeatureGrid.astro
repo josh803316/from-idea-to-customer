@@ -1,0 +1,60 @@
+---
+const features = [
+  {
+    icon: '&#9632;',
+    title: 'The Checkerboard',
+    description:
+      'Every square is a unit of responsibility. You start with one. Ownership is not a byproduct of seniority — it\'s a practice. Own one square completely and you understand what you\'re scaling.',
+  },
+  {
+    icon: '&#128172;',
+    title: 'The Conference Room',
+    description:
+      'You cannot explain something clearly if you don\'t understand it. The conference room method — explain it until you can\'t, then go deeper — is the most effective learning tool most organizations have abandoned.',
+  },
+  {
+    icon: '&#9651;',
+    title: 'Bounded vs. Unbounded',
+    description:
+      'Most junior engineers have only ever operated in bounded space. This curriculum makes the distinction explicit and teaches you to recognize which type of problem you\'re in — because the tools are completely different.',
+  },
+  {
+    icon: '&#127914;',
+    title: 'Four Hats',
+    description:
+      'PM, Marketer, Sales Lead, CTO. Each is a lens on the same problem. Owning a square fully means seeing it through each lens — knowing when to go deep, when familiarity is enough, and when to bring in a domain expert.',
+  },
+  {
+    icon: '&#128736;',
+    title: 'Constraints as Material',
+    description:
+      'The default is to treat constraints as walls. Owners treat them as material to be worked with: remove, reshape, manage, or wrap — but always consciously, never by default.',
+  },
+  {
+    icon: '&#129302;',
+    title: 'LLM-Powered Conference Room',
+    description:
+      'Structured exercises using an LLM as a conference room partner. Present your frame to the skeptical CMO. Defend your architecture to the impatient CEO. Practice explaining until you can actually explain.',
+  },
+];
+---
+
+<section class="py-16">
+  <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">
+    The framework
+  </h2>
+  <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">
+    Most engineering education teaches you how to code. This teaches you how to think about
+    the code you choose to write — and everything that happens before and after.
+  </p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {features.map((f) => (
+      <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div class="text-3xl mb-4" aria-hidden="true" set:html={f.icon} />
+        <h3 class="font-semibold text-gray-900 mb-2">{f.title}</h3>
+        <p class="text-gray-600 text-sm leading-relaxed">{f.description}</p>
+      </div>
+    ))}
+  </div>
+</section>

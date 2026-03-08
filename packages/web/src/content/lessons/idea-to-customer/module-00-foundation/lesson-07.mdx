@@ -1,0 +1,104 @@
+---
+title: "Automation and the Lost Process"
+moduleSlug: "module-00-foundation"
+courseSlug: "idea-to-customer"
+order: 7
+draft: false
+estimatedMinutes: 30
+objectives:
+  - "Trace any automated process back to the real process it replaced"
+  - "Identify automations that manage symptoms versus automations that streamline healthy processes"
+  - "Assess the fragility of an automated process by asking what happens when the automation breaks"
+---
+
+import { Aside } from '@/components/mdx/Aside.astro';
+
+## What automation actually does
+
+Almost every automated process in a SaaS company is a wrapper on top of a real process. The automation didn't replace the process — it abstracted it.
+
+This is the key distinction, and it's missed almost universally.
+
+When a deployment pipeline was built, there was a real deployment process. Someone ran commands manually. They checked things. They made judgment calls. They had a mental model of what was happening at each step. The pipeline was built to do that work reliably, faster, with fewer human errors.
+
+The pipeline is good. Automation is good. But something happened over time: **the real process became invisible.** The people who understood the underlying steps left, or moved to other teams, or simply stopped thinking about it. The people who inherited the pipeline know what button to push. They don't know what the button is doing at each layer. And they especially don't know *why* it was built to do those specific things in that specific order.
+
+This creates three problems.
+
+<Aside type="insight">
+The person who can trace an automated end-to-end process back to its real foundations — who understands both the automation and the reality underneath it — has a fundamentally different level of ownership than the person who just knows which button to push.
+</Aside>
+
+## Problem 1: When it breaks, nobody knows how to fix it
+
+When the automation breaks, the organization discovers that nobody knows how to do it manually. They don't even know what "it" is at the level below the wrapper.
+
+This is the most visible failure mode. The deployment pipeline goes down on a Friday afternoon. Everybody knows the pipeline is broken. Nobody knows how to deploy without the pipeline. The process that the pipeline was automating has been lost.
+
+The fix is documentation — not of the pipeline steps, but of the underlying process. What is the pipeline actually doing? What would a human do if the pipeline didn't exist? If you can't answer this for the systems you operate, you're not owning them.
+
+## Problem 2: When the business changes, modifications are made blind
+
+When the business changes and the process needs to evolve, people modify the automation without understanding what the automation was actually doing or why.
+
+This is the invisible failure mode, and it's worse than the first one because it doesn't announce itself.
+
+A new team member needs to modify the deployment pipeline to add a new step. They read the code, figure out where to insert the step, and add it. It works. Ship it. But the new step conflicts with something three levels down in the original process — something the automation was handling implicitly because the original author knew it needed to happen. The conflict doesn't surface immediately. It surfaces six months later as an intermittent failure with no obvious cause.
+
+The modification was made by someone who understood the automation. But they didn't understand the process underneath the automation. The two are not the same.
+
+## Problem 3: Some automation manages symptoms, not causes
+
+This is the most important problem, and the least visible.
+
+Some automation exists not to streamline a healthy process but to manage a symptom of a problem no one could fix. The root cause is still there. The automation just makes it tolerable.
+
+Over time, everyone forgets the root cause exists. The automation becomes "the process." And the actual problem lives underneath, accumulating risk.
+
+Examples:
+- A retry mechanism that re-tries failed API calls — masking that the API has a reliability problem that was never addressed
+- A scheduled job that cleans up orphaned records — masking that the application logic creating orphaned records was never fixed
+- A monitoring alert that fires and gets silenced every night — masking a nightly failure that someone accepted as "normal"
+- An onboarding checklist that sends reminders every day — masking that the underlying onboarding process produces so much confusion that reminders are required indefinitely
+
+None of these automations are wrong in the moment they're created. Sometimes managing a symptom is exactly the right call — you need to stabilize now while the root cause is addressed separately. But if the plan was to address the root cause later, and "later" never came, and the automation is still running three years later and nobody knows what it's wrapping: that's a debt accumulating with nobody watching it.
+
+<Aside type="warning">
+The automation will eventually fail. When it does, the team will discover a problem that's been there for three years, entrenched into every process that was built on top of the original fix. The older the wrapper, the more catastrophic the discovery.
+</Aside>
+
+## The recursive "why" in practice
+
+For any automated process, the questions are:
+
+1. What is this actually doing?
+2. What was happening before this automation existed?
+3. Why was it built?
+4. Is it solving the real problem, or is it managing a symptom?
+5. Could we fix the root cause instead?
+6. If we can't — do we at least *know* that we're managing a symptom?
+
+Few people in any organization can answer all six questions for any of their automated processes. The person who can answer all six for their squares has a completely different relationship to ownership than the person who can only answer question 1.
+
+The last question is the most important: **do we at least know what we're doing and why?** Wrapping a symptom with full consciousness and a plan is responsible management. Wrapping a symptom while believing you've fixed the root cause is an accident waiting to happen.
+
+## Exercise
+
+Pick one automated process you use regularly. This could be a CI/CD pipeline, a scheduled job, a script someone runs manually, a monitoring alert, a recurring report, or any other process that runs automatically.
+
+Apply the six questions above:
+
+1. What is it actually doing at each step?
+2. What happened before it existed?
+3. Why was it built?
+4. Is it solving the real problem or managing a symptom?
+5. Could you fix the root cause?
+6. Do you know the answer to question 4?
+
+If you can't answer questions 2, 3, or 4 — that's the ownership gap. You're using a button without knowing what the button does.
+
+Conference room exercise: explain this process to the LLM playing someone who joined the company tomorrow. They need to understand it well enough to modify it safely. What do they need to know that isn't in the documentation?
+
+---
+
+*This completes the Foundation module. You now have the operating system: the Checkerboard, the Conference Room method, bounded vs. unbounded, framing, constraints, abstraction, and automation. Every hat you put on from here operates on this foundation.*

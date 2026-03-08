@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import LessonLayout from '@/layouts/LessonLayout.astro';
+
+export async function getStaticPaths() {
+  const lessons = await getCollection('lessons', ({ data }) => !data.draft);
+  const courses = await getCollection('courses');
+  const modules = await getCollection('modules');
+
+  return lessons.map((lesson) => {
+    // lesson.slug = "idea-to-customer/module-01-thinking-like-a-pm/lesson-01"
+    const parts = lesson.slug.split('/');
+    const courseSlug = parts[0];
+    const moduleSlug = parts[1];
+    const lessonFile = parts[2];
+
+    const course = courses.find((c) => c.slug === courseSlug);
+    const mod = modules.find((m) => m.slug.endsWith(moduleSlug));
+
+    return {
+      params: { course: courseSlug, module: moduleSlug, lesson: lessonFile },
+      props: { lesson, course, mod },
+    };
+  });
+}
+
+const { lesson, course, mod } = Astro.props;
+const { Content } = await lesson.render();
+---
+
+<LessonLayout
+  title={lesson.data.title}
+  description={lesson.data.objectives[0] ?? lesson.data.title}
+  courseSlug={lesson.data.courseSlug}
+  courseTitle={course?.data.title ?? lesson.data.courseSlug}
+  moduleSlug={lesson.data.moduleSlug}
+  moduleTitle={mod?.data.title ?? lesson.data.moduleSlug}
+  lessonSlug={lesson.slug}
+  estimatedMinutes={lesson.data.estimatedMinutes}
+  objectives={lesson.data.objectives}
+>
+  <Content />
+</LessonLayout>

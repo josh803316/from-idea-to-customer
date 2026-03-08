@@ -1,0 +1,157 @@
+---
+title: "The First Square: Framing"
+moduleSlug: "module-00-foundation"
+courseSlug: "idea-to-customer"
+order: 4
+draft: false
+estimatedMinutes: 30
+objectives:
+  - "Write a complete problem frame covering all six components"
+  - "Understand why the initial frame is always wrong — and what to do about it"
+  - "Recognize framing failures in projects you've already worked on"
+---
+
+import { Aside } from '@/components/mdx/Aside.astro';
+
+## The square every project shares
+
+Before any code. Before any PM hat or CTO hat. Before any SaaS-specific knowledge.
+
+There is one square that every project, initiative, feature, and decision shares — and it's the most commonly skipped. Framing.
+
+Can you articulate:
+- What you're doing and why?
+- What success looks like?
+- What you're explicitly *not* doing?
+- What could go wrong?
+- What you'll do when it does?
+- How you'll operate — cadence, decisions, escalation, progress tracking?
+
+Every bad project traces back to a framing failure. Not a technical failure. A framing failure. The spec was ambiguous. The success criteria were never defined. Nobody agreed on what was in scope. The risk was visible but never named. The operational plan assumed things would go smoothly, and when they didn't, nobody knew who had the authority to make a call.
+
+<Aside type="insight">
+The veterans who never learned to frame properly are still mimicking dogma fifteen years in. They have years of experience building things that didn't solve the right problem. Framing is the entry point to ownership. It's the first square everyone owns.
+</Aside>
+
+## The six components of a frame
+
+A complete frame answers six questions. None of them are optional.
+
+### 1. Problem statement
+
+What is the problem we are solving, and for whom?
+
+This is the hardest and most important question. It is answered wrong constantly, because people confuse the problem with the solution.
+
+"We need a dashboard" is not a problem. "We need a faster deployment pipeline" is not a problem. These are solutions with the problem stripped out. They skip the most important reasoning and jump straight to execution.
+
+A problem statement names a person, a situation, and a pain:
+> *Engineering managers at companies with 10–50 engineers spend 2+ hours on Friday morning assembling status updates because they have no single source of truth for what changed during the week.*
+
+That's a problem. From it, you can derive many possible solutions. From "we need a dashboard," you can only derive a dashboard.
+
+### 2. Goals and objectives
+
+What does success look like? How will we measure it?
+
+Goals are meaningless without measurability. "Improve the user experience" is not a goal — it's an aspiration. "Reduce time-to-first-meaningful-interaction from 4.2s to under 2s by Q3" is a goal.
+
+Two things have to be true of a good success metric:
+1. You can measure it before you ship (so you have a baseline)
+2. You can measure it after (so you know if it worked)
+
+If you can't measure it today, you can't measure success. If you can't measure success, you'll never know if you shipped the right thing.
+
+### 3. Scope
+
+What are we doing, and what are we *not* doing?
+
+The "not doing" section is the most valuable part of scope. It documents what you actively decided to skip, which prevents scope creep during execution and prevents re-litigation after the fact.
+
+Good scope is specific. "We're not building user accounts in this phase" is specific. "We're keeping it simple" is not scope.
+
+### 4. Risks
+
+What could go wrong?
+
+Risks are not failures — they're predictable categories of failure. Every project has risks. Naming them doesn't make them more likely to happen; it makes you more prepared when they do.
+
+Risks that commonly go unnamed:
+- "We don't know if customers will use this." (Demand risk)
+- "This depends on a team we don't control." (Dependency risk)
+- "We've never built this kind of thing before." (Capability risk)
+- "We're estimating this will take two weeks and we've never been right about this before." (Estimation risk)
+
+### 5. Mitigation
+
+What is the plan when things do go wrong?
+
+Mitigation is not the plan where everything goes fine. It's the plan for the risks you named in step 4. Each risk should have a corresponding mitigation — even if the mitigation is "we've accepted this risk and will address it if it materializes."
+
+The act of naming mitigations forces two things: you take risks seriously enough to think through them, and you create shared expectations so that when something goes wrong, nobody is surprised about the plan.
+
+### 6. Operational plan
+
+How do we work?
+
+This is the question nobody asks until the project is broken. Cadence: how often do we sync? Communication: who needs to be informed of what, and how? Decision-making: who has the authority to make a call, and what requires escalation? Progress tracking: how do we know we're moving? How do we know we're stuck?
+
+The operational plan isn't bureaucracy — it's the infrastructure that makes everything else executable. A brilliant problem statement with no operational plan produces a beautiful document that generates confusion the moment something unexpected happens.
+
+## The frame is wrong. Update it.
+
+Here's the part nobody tells you: the initial frame is always wrong.
+
+Not because the people who wrote it were careless. Because framing is done under uncertainty, and the project reveals information that wasn't available at the start. You learn the real problem by trying to solve the stated problem. You discover the real success criteria by shipping something and seeing how people respond.
+
+This doesn't mean framing is pointless. It means framing is not a one-time activity. The skill isn't writing a perfect problem statement — it's recognizing when the frame has shifted and updating it.
+
+Owning the framing square means owning it as a living thing. When the frame changes, update it. When new information reveals a risk that wasn't named, name it. When scope creep appears, explicitly decide whether to expand scope (and document the decision) or hold the line.
+
+<Aside type="warning">
+The most common sign that a frame is outdated: people are arguing about what the project is supposed to accomplish. If that argument is happening, the frame hasn't been updated to reflect the current shared understanding. Stop the argument, update the frame.
+</Aside>
+
+## The FITC frame template
+
+```
+## Problem Statement
+[Who, situation, pain. No solutions.]
+
+## Goals and Success Metrics
+[What does success look like? How will we measure it?]
+
+## Scope
+### In scope
+- [What we're doing]
+### Out of scope
+- [What we're explicitly not doing]
+
+## Risks
+- [Risk 1]
+- [Risk 2]
+- [Risk n]
+
+## Mitigation
+- [Risk 1] → [Mitigation]
+- [Risk 2] → [Mitigation]
+
+## Operational Plan
+- Cadence: [How often do we sync?]
+- Communication: [Who needs to know what?]
+- Decisions: [Who has authority? What requires escalation?]
+- Progress tracking: [How do we know we're moving?]
+- Stuck signal: [How do we know we're stuck?]
+```
+
+## Exercise
+
+Pick a project you're currently working on — or have recently completed — and write the frame using the template above.
+
+Then, for any completed project: compare what you wrote to what actually happened. Where did the frame break down? What would you have written differently if you'd had to write it before starting?
+
+In the conference room exercise for this lesson: present your frame to the LLM playing the most skeptical stakeholder you can think of. Let them challenge every section. Find the weaknesses before the project reveals them.
+
+---
+
+*Next: Constraints as Material — why the relationship between ownership and constraints is not what you've been taught.*

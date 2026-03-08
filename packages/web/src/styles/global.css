@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minimal base overrides */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  code {
+    font-family: theme('fontFamily.mono');
+    @apply text-sm;
+  }
+}

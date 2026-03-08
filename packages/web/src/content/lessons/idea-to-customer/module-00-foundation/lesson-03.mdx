@@ -1,0 +1,82 @@
+---
+title: "Bounded vs. Unbounded: The Two Types of Problems"
+moduleSlug: "module-00-foundation"
+courseSlug: "idea-to-customer"
+order: 3
+draft: false
+estimatedMinutes: 20
+objectives:
+  - "Distinguish bounded from unbounded problems by their defining characteristics"
+  - "Recognize which type of problem you're in when you're working"
+  - "Understand why applying bounded tools to unbounded problems produces confusion, not solutions"
+---
+
+import { Aside } from '@/components/mdx/Aside.astro';
+
+## Two completely different landscapes
+
+There are two fundamentally different types of problems, and they require completely different tools, instincts, and approaches. Most junior engineers have only ever operated in one of them. Most of the pain in their early career comes from not knowing the other one exists — and applying the wrong toolkit.
+
+**Bounded problems** have defined inputs, constraints, and success criteria. A ticket with acceptance criteria. A runbook. A deployment checklist. A bug report with steps to reproduce. You know when you're done. You know what "correct" looks like before you start.
+
+**Unbounded problems** have ambiguous inputs, shifting constraints, and success criteria you have to define yourself. What should we build? Who is it for? How do we position it? Is this the right problem to solve? You can't know when you're done, because "done" is something you have to determine.
+
+Most engineering work lives in bounded space. Operations work lives there too — procedural, structured, like a fire captain running a firehouse. The value of bounded work is its executability. Clear inputs, clear outputs, repeatable process.
+
+Unbounded work is what happens before bounded work can exist. Someone has to decide what to build, for whom, and why — before there can be a ticket. Someone has to decide whether to build at all. This is where the PM, the CEO, the CTO, and eventually you, spend a lot of time.
+
+<Aside type="insight">
+Early-stage startups operate mostly in unbounded space. Almost everything is an open question. Late-stage companies have converted many of their unbounded problems into bounded ones — but new unbounded problems emerge constantly at the edges of what they know.
+</Aside>
+
+## Why this distinction matters urgently
+
+Here's the failure mode: a junior engineer encounters an unbounded problem and treats it as a bounded one.
+
+They start implementing. They build something. They solve a well-defined version of the ambiguous problem without ever questioning whether the definition was correct. And sometimes this works — but often it produces something technically correct and strategically wrong.
+
+The opposite failure mode is less common in engineering but equally damaging: treating bounded problems as unbounded. Asking "but *why* do we deploy this way?" when the answer is "because it works and we need to do it in the next two hours." This is appropriate depth applied at an inappropriate moment.
+
+The skill of recognizing which type of problem you're in is not obvious. It requires asking:
+
+- Do I know what success looks like before I start? If no → unbounded.
+- Are the constraints clearly defined? If no → unbounded.
+- Could two reasonable people disagree about whether I'm done? If yes → unbounded.
+- Is the answer knowable in principle, or does it require judgment? If judgment → unbounded.
+
+## In the SaaS startup
+
+The two stages of company maturity — early and late — map onto this framework in an illuminating way.
+
+**Early-stage:** Almost everything is unbounded. Who are our customers? What do they actually need? How do we position this? What's the right price? What should we build next? These are all open questions, and the answers are emergent, not prescribed. One person often wears five hats in early-stage, and half of those hats exist precisely to generate bounded work from unbounded starting points: the PM converts fuzzy customer needs into tickets, the CTO converts vague product goals into technical constraints, Sales converts "we need more revenue" into a structured process.
+
+**Late-stage:** Specialization has converted many of the originally unbounded problems into bounded ones. The sales process is documented. The deployment pipeline is defined. The hiring rubric exists. But new unbounded problems keep appearing at the frontier of what the company knows — new markets, new product directions, new competitive threats. The company has operational excellence in bounded space but risks becoming brittle if nobody maintains the capacity to operate in unbounded space.
+
+The transition from one person wearing five hats to five people each wearing one hat is fundamentally a transition from mostly-unbounded to mostly-bounded — but it's also the moment where the organization needs to be most careful not to lose its ability to navigate what it doesn't yet know.
+
+## Two different failure modes, one shared confusion
+
+When you don't know which type of problem you're in, you exhibit a specific confusion pattern: you feel stuck for no obvious reason.
+
+In a bounded problem, stuck usually means a missing piece of information, a technical obstacle, or a skills gap. You can name the blocker.
+
+In an unbounded problem, stuck feels different. There's no specific blocker. You have all the information but you still don't know what to do. You've been working for two hours and feel like you haven't made progress. This is often the sensation of being in unbounded space without knowing it — spinning because you're trying to find "the answer" that doesn't exist yet, instead of making a judgment call that reduces uncertainty enough to take a step forward.
+
+<Aside type="warning">
+Unbounded problems don't get solved by working harder. They get solved by making a decision — often with incomplete information — and seeing what the decision reveals. This feels deeply uncomfortable for people trained in bounded space, where working harder reliably produces progress.
+</Aside>
+
+## Exercise
+
+Look at your current work and identify one bounded and one unbounded problem you're dealing with.
+
+For each one:
+1. What makes it bounded or unbounded? (Be specific — what's defined? What isn't?)
+2. What tool or approach are you currently using?
+3. Is that the right tool for that type of problem?
+
+If you find that you have mostly bounded problems and no unbounded ones, that's worth noticing. It usually means someone else is doing the unbounded work upstream, converting the unclear into the clear before it reaches you. Understanding that conversion process — who is doing it, how, and with what quality — is itself a form of ownership.
+
+---
+
+*Next: The First Square — how to frame any problem before trying to solve it.*

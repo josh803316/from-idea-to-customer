@@ -1,0 +1,23 @@
+---
+export const prerender = false;
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SignInForm from '@/components/auth/SignInForm';
+
+const redirectTo = Astro.url.searchParams.get('redirect') ?? '/courses';
+---
+
+<BaseLayout
+  title="Sign In"
+  description="Sign in to track your progress through the curriculum."
+  noindex={true}
+>
+  <div class="max-w-sm mx-auto py-8">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
+      <p class="text-gray-600">Sign in to track your progress</p>
+    </div>
+
+    <SignInForm client:load redirectTo={redirectTo} />
+  </div>
+</BaseLayout>

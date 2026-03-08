@@ -1,0 +1,14 @@
+name: Vercel Preview
+
+on:
+  pull_request:
+
+jobs:
+  preview:
+    uses: josh803316/shared-ci-workflows/.github/workflows/vercel-preview.yml@main
+    with:
+      app-name: "From Idea to Customer"
+      build-command: "bun run --cwd packages/web build"
+      vercel-project-id: ${{ vars.VERCEL_PROJECT_ID }}
+      vercel-org-id: ${{ vars.VERCEL_ORG_ID }}
+    secrets: inherit

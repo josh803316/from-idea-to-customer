@@ -1,0 +1,84 @@
+---
+title: "Understanding User Problems"
+moduleSlug: "module-01-thinking-like-a-pm"
+courseSlug: "idea-to-customer"
+order: 1
+draft: false
+estimatedMinutes: 20
+objectives:
+  - "Distinguish between a user problem and a product idea"
+  - "Write a problem statement in the 'Job to Be Done' format"
+  - "Identify the three questions every PM must answer before writing a spec"
+---
+
+import { Aside } from '@/components/mdx/Aside.astro';
+
+## The biggest mistake engineers make
+
+Engineers love solutions. Give us a problem and we immediately start designing the architecture, picking the stack, naming the tables. It feels productive — because it is. Building is what we're good at.
+
+But there's a step before building that most engineers skip: **deeply understanding the problem**.
+
+A feature built for the wrong problem is waste. Worse, it's *confident* waste — you ship something polished that nobody asked for.
+
+<Aside type="insight">
+**The PM rule of thumb**: Spend at least as long understanding the problem as you spend designing the solution. Most engineers get this ratio backwards.
+</Aside>
+
+## What a user problem actually looks like
+
+A user problem is not:
+- "We need a dashboard"
+- "Users want dark mode"
+- "We should add notifications"
+
+These are solutions wearing problem-shaped clothing.
+
+A real user problem sounds like:
+> *"I lose track of where our project stands between weekly standups, so I'm always surprised on Fridays."*
+
+Notice what's in that sentence:
+1. A **person** ("I")
+2. A **situation** ("between weekly standups")
+3. A **pain** ("lose track", "surprised on Fridays")
+
+No solution mentioned. No technology implied. Just a human struggling with something.
+
+## The Job to Be Done framework
+
+Clayton Christensen's "Jobs to Be Done" (JTBD) framework is the most useful PM tool you'll learn this week. The core idea: people don't buy products; they *hire* products to do a job.
+
+The format:
+
+> When I **[situation]**, I want to **[motivation]**, so I can **[expected outcome]**.
+
+Applied to our example:
+> When I'm preparing for Friday standup, I want to quickly see what changed this week, so I can give an accurate status without hunting through Slack and Jira.
+
+This one sentence contains everything a PM needs to write a spec and everything an engineer needs to build the right thing.
+
+## The three questions
+
+Before writing a single line of code or a single line of spec, a PM must answer:
+
+**1. Who has this problem?**
+Be specific. "All users" is not an answer. "Engineering managers at companies with 10–50 engineers who ship weekly" is an answer.
+
+**2. How painful is it?**
+Pain has a spectrum. Is this a "nice to have" or a "I have a workaround that takes 2 hours every Friday"? The more painful, the more people will pay for a solution.
+
+**3. Why haven't they already solved it?**
+This is the sneaky one. If the problem is real and painful, why is nobody else solving it? Understanding the *why* reveals the real constraint — which is often what your product needs to address.
+
+## Exercise
+
+Pick a workflow in your current job that feels inefficient. Write:
+
+1. The JTBD statement
+2. Answers to all three PM questions
+
+Don't use the words "dashboard", "notification", or "integration" in your answers. If you find yourself wanting to, you're describing a solution, not a problem.
+
+---
+
+*Next: We'll take your problem statement and turn it into a one-page PRD that your team can actually build from.*

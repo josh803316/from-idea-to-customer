@@ -1,0 +1,95 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import MarkCompleteButton from '@/components/lesson/MarkCompleteButton';
+import { parseProgress, isLessonComplete } from '@/lib/progress';
+
+interface Props {
+  title: string;
+  description: string;
+  courseSlug: string;
+  courseTitle: string;
+  moduleSlug: string;
+  moduleTitle: string;
+  lessonSlug: string;
+  estimatedMinutes: number;
+  objectives: string[];
+}
+
+const {
+  title,
+  description,
+  courseSlug,
+  courseTitle,
+  moduleSlug,
+  moduleTitle,
+  lessonSlug,
+  estimatedMinutes,
+  objectives,
+} = Astro.props;
+
+const progressCookie = Astro.cookies.get('fitc_progress')?.value;
+const progressStore = parseProgress(progressCookie);
+const completed = isLessonComplete(progressStore, courseSlug, lessonSlug);
+
+const crumbs = [
+  { label: 'Courses', href: '/courses' },
+  { label: courseTitle, href: `/courses/${courseSlug}` },
+  { label: moduleTitle, href: `/courses/${courseSlug}#${moduleSlug}` },
+  { label: title, href: Astro.url.pathname },
+];
+---
+
+<BaseLayout {title} {description}>
+  <JsonLd
+    type="LearningResource"
+    name={title}
+    description={description}
+    url={Astro.url.href}
+    timeRequired={`PT${estimatedMinutes}M`}
+    learningResourceType="Lesson"
+  />
+
+  <div class="max-w-3xl mx-auto">
+    <Breadcrumbs {crumbs} />
+
+    <div class="mt-8 mb-6">
+      <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+        <span>{estimatedMinutes} min read</span>
+        <span aria-hidden="true">&middot;</span>
+        <span>{moduleTitle}</span>
+      </div>
+      <h1 class="text-3xl font-bold text-gray-900">{title}</h1>
+    </div>
+
+    {objectives.length > 0 && (
+      <div class="bg-gray-50 rounded-xl p-6 mb-10">
+        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">
+          What you'll learn
+        </h2>
+        <ul class="space-y-2">
+          {objectives.map((obj) => (
+            <li class="flex items-start gap-2 text-gray-700">
+              <span class="text-brand-500 mt-0.5" aria-hidden="true">&#10003;</span>
+              <span>{obj}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <article class="prose prose-gray max-w-none">
+      <slot />
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-gray-100">
+      <MarkCompleteButton
+        client:load
+        courseSlug={courseSlug}
+        lessonSlug={lessonSlug}
+        initialCompleted={completed}
+      />
+    </div>
+  </div>
+</BaseLayout>

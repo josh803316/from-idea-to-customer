@@ -1,0 +1,51 @@
+---
+interface CourseProps {
+  type: 'Course';
+  name: string;
+  description: string;
+  url: string;
+  provider?: string;
+}
+
+interface LessonProps {
+  type: 'LearningResource';
+  name: string;
+  description: string;
+  url: string;
+  timeRequired?: string; // ISO 8601 duration, e.g. "PT20M"
+  learningResourceType?: string;
+}
+
+type Props = CourseProps | LessonProps;
+
+const props = Astro.props;
+
+let schema: Record<string, unknown>;
+
+if (props.type === 'Course') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: props.name,
+    description: props.description,
+    url: props.url,
+    provider: {
+      '@type': 'Organization',
+      name: props.provider ?? 'From Idea to Customer',
+      url: Astro.site?.href,
+    },
+  };
+} else {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'LearningResource',
+    name: props.name,
+    description: props.description,
+    url: props.url,
+    ...(props.timeRequired && { timeRequired: props.timeRequired }),
+    ...(props.learningResourceType && { learningResourceType: props.learningResourceType }),
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

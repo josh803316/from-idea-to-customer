@@ -1,0 +1,57 @@
+---
+import BaseHead from '@/components/seo/BaseHead.astro';
+import AuthButton from '@/components/auth/AuthButton';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, ogImage, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead {title} {description} {ogImage} {noindex} />
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link
+      href="https://fonts.bunny.net/css?family=inter:400,500,600,700&family=jetbrains-mono:400,500"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen bg-white text-gray-900 antialiased">
+    <header class="border-b border-gray-100">
+      <nav class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="font-semibold text-gray-900 hover:text-brand-600 transition-colors">
+          From Idea to Customer
+        </a>
+        <div class="flex items-center gap-6 text-sm">
+          <a href="/courses" class="text-gray-600 hover:text-gray-900 transition-colors">Courses</a>
+          <a href="/about" class="text-gray-600 hover:text-gray-900 transition-colors">About</a>
+          <a
+            href="/waitlist"
+            class="bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 transition-colors"
+          >
+            Join Waitlist
+          </a>
+          <AuthButton client:load />
+        </div>
+      </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-12">
+      <slot />
+    </main>
+
+    <footer class="border-t border-gray-100 mt-24">
+      <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-gray-500 flex justify-between">
+        <span>From Idea to Customer &copy; {new Date().getFullYear()}</span>
+        <span>Built in public &mdash; every decision is a teaching moment</span>
+      </div>
+    </footer>
+  </body>
+</html>

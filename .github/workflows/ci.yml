@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  ci:
+    name: Typecheck + Lint + Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+        env:
+          GITHUB_TOKEN: ${{ secrets.BUN_AUTH_TOKEN }}
+
+      - name: Typecheck (api)
+        run: bun run --cwd packages/api typecheck
+
+      - name: Typecheck (web)
+        run: bun run --cwd packages/web typecheck
+        env:
+          # Astro check needs a site URL to generate canonical links
+          SITE_URL: https://fromideatocustomer.com
+
+      - name: Unit tests (api)
+        run: bun run --cwd packages/api test
+        env:
+          # No DATABASE_URL needed — unit tests mock the pool
+          NODE_ENV: test
