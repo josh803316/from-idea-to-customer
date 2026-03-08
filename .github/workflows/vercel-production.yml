@@ -23,6 +23,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.BUN_AUTH_TOKEN }}
 
+      - name: Link Vercel project
+        run: |
+          mkdir -p packages/web/.vercel
+          echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' > packages/web/.vercel/project.json
+
       - name: Pull Vercel environment variables
         run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         working-directory: packages/web
