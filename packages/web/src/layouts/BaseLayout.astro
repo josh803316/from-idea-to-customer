@@ -1,6 +1,7 @@
 ---
 import BaseHead from '@/components/seo/BaseHead.astro';
 import AuthButton from '@/components/auth/AuthButton';
+import LabPanel from '@/components/experiments/LabPanel';
 import Analytics from '@vercel/analytics/astro';
 import '@/styles/global.css';
 
@@ -119,6 +120,8 @@ const { title, description, ogImage, noindex } = Astro.props;
     <main class="max-w-5xl mx-auto px-4 py-12">
       <slot />
     </main>
+
+    <LabPanel client:load />
 
     <footer class="border-t border-gray-100 mt-24">
       <div class="max-w-5xl mx-auto px-4 py-8 text-sm text-gray-500 flex justify-between">

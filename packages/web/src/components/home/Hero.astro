@@ -1,4 +1,26 @@
 ---
+interface Props {
+  headlineVariant?: 'control' | 'outcome' | 'direct';
+  ctaVariant?: 'control' | 'action' | 'curiosity';
+}
+
+const { headlineVariant = 'control', ctaVariant = 'control' } = Astro.props;
+
+const headlines: Record<string, { main: string; accent: string }> = {
+  control: { main: 'You can manage it.', accent: 'Or it will manage you.' },
+  outcome: { main: 'Stop executing tasks.', accent: 'Start owning outcomes.' },
+  direct: { main: 'From junior engineer', accent: 'to system owner.' },
+};
+
+const ctaLabels: Record<string, string> = {
+  control: 'Start with the Checkerboard',
+  action: 'Start Learning Free',
+  curiosity: 'Show Me the Roadmap',
+};
+
+const headline = headlines[headlineVariant] ?? headlines.control;
+const ctaLabel = ctaLabels[ctaVariant] ?? ctaLabels.control;
+
 const examples = [
   {
     icon: '☕',
@@ -43,8 +65,8 @@ const hats = [
   </div>
 
   <h1 class="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight max-w-3xl mx-auto mb-6">
-    You can manage it.<br />
-    <span class="text-brand-600">Or it will manage you.</span>
+    {headline.main}<br />
+    <span class="text-brand-600">{headline.accent}</span>
   </h1>
 
   <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
@@ -157,7 +179,7 @@ const hats = [
       href="/courses"
       class="bg-brand-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-brand-700 transition-colors"
     >
-      Start with the Checkerboard
+      {ctaLabel}
     </a>
     <a
       href="/waitlist"

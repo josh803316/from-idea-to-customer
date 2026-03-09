@@ -1,4 +1,16 @@
 ---
+/**
+ * The home page is intentionally SSR (prerender = false) so that variant
+ * assignments from the experiment cookie are rendered server-side — no flash
+ * of the wrong content, no layout shift. This is the correct architecture for
+ * feature-flagged pages and is itself the lesson the LabPanel explains.
+ *
+ * Static pages (courses, lessons) don't need to vary per user so they stay
+ * pre-rendered at build time. The boundary between SSR and static is not
+ * arbitrary — it follows the data.
+ */
+export const prerender = false;
+
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/home/Hero.astro';
 import FeatureGrid from '@/components/home/FeatureGrid.astro';
@@ -7,15 +19,51 @@ import CaseStudy from '@/components/home/CaseStudy.astro';
 import LiveMetrics from '@/components/home/LiveMetrics';
 import SiteAgent from '@/components/home/SiteAgent';
 import WaitlistForm from '@/components/home/WaitlistForm';
+import { COOKIE_NAME, parseAssignments, getVariant } from '@/lib/experiments';
+
+const raw = Astro.cookies.get(COOKIE_NAME)?.value;
+const assignments = parseAssignments(raw);
+
+const headlineVariant = getVariant(assignments, 'hero-headline') as 'control' | 'outcome' | 'direct';
+const ctaVariant = getVariant(assignments, 'hero-cta') as 'control' | 'action' | 'curiosity';
+const chessboardVariant = getVariant(assignments, 'chessboard');
 ---
 
 <BaseLayout
   title="From Idea to Customer"
   description="A SaaS curriculum for thinking beyond code. Learn to own outcomes across product, marketing, sales, and technology — starting on day one."
 >
-  <Hero />
+  <Hero headlineVariant={headlineVariant} ctaVariant={ctaVariant} />
   <FeatureGrid />
-  <ChessBoard3D client:load />
+
+  {chessboardVariant === 'simplified' ? (
+    <section class="py-12">
+      <p class="text-center text-sm font-medium text-gray-400 uppercase tracking-widest mb-8">
+        …and in your tech product lifecycle and stack
+      </p>
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+          <div class="text-2xl mb-3">🟦</div>
+          <h3 class="font-bold text-gray-900 mb-2">OS Mode — Direct</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            You sell directly to end users. 5 dimensions to manage: customers, product, engineering,
+            marketing, and sales. Fast feedback loops. The board is visible.
+          </p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+          <div class="text-2xl mb-3">♟</div>
+          <h3 class="font-bold text-gray-900 mb-2">OEM Mode — Multiplied</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            You operate through channel partners, resellers, or platform operators. Those 5
+            dimensions multiply across every partner. The same problems exist — the board is just
+            bigger and harder to see.
+          </p>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <ChessBoard3D client:load />
+  )}
 
   <CaseStudy>
     <LiveMetrics client:load />
