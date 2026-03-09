@@ -32,6 +32,8 @@ const showFeatureGrid = isFlagEnabled(overrides, 'feature-grid');
 >
   <Hero headlineVariant={headlineVariant} ctaVariant={ctaVariant} />
 
+  {showAgent && <SiteAgent client:load />}
+
   {showFeatureGrid && <FeatureGrid />}
 
   {chessboardVariant === 'simplified' ? (
@@ -68,8 +70,6 @@ const showFeatureGrid = isFlagEnabled(overrides, 'feature-grid');
       <LiveMetrics client:load />
     </CaseStudy>
   )}
-
-  {showAgent && <SiteAgent client:load />}
 
   {showWaitlist && (
     <section class="py-16 text-center border-t border-gray-100">
