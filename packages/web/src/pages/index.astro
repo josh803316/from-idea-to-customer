@@ -1,14 +1,4 @@
 ---
-/**
- * The home page is intentionally SSR (prerender = false) so that variant
- * assignments from the experiment cookie are rendered server-side — no flash
- * of the wrong content, no layout shift. This is the correct architecture for
- * feature-flagged pages and is itself the lesson the LabPanel explains.
- *
- * Static pages (courses, lessons) don't need to vary per user so they stay
- * pre-rendered at build time. The boundary between SSR and static is not
- * arbitrary — it follows the data.
- */
 export const prerender = false;
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
@@ -20,13 +10,20 @@ import LiveMetrics from '@/components/home/LiveMetrics';
 import SiteAgent from '@/components/home/SiteAgent';
 import WaitlistForm from '@/components/home/WaitlistForm';
 import { COOKIE_NAME, parseAssignments, getVariant } from '@/lib/experiments';
+import { FLAGS_COOKIE, parseOverrides, isFlagEnabled } from '@/lib/flags';
 
-const raw = Astro.cookies.get(COOKIE_NAME)?.value;
-const assignments = parseAssignments(raw);
-
+// ── Experiment assignments ────────────────────────────────────────────────────
+const assignments = parseAssignments(Astro.cookies.get(COOKIE_NAME)?.value);
 const headlineVariant = getVariant(assignments, 'hero-headline') as 'control' | 'outcome' | 'direct';
-const ctaVariant = getVariant(assignments, 'hero-cta') as 'control' | 'action' | 'curiosity';
+const ctaVariant      = getVariant(assignments, 'hero-cta') as 'control' | 'action' | 'curiosity';
 const chessboardVariant = getVariant(assignments, 'chessboard');
+
+// ── Feature flags ─────────────────────────────────────────────────────────────
+const overrides     = parseOverrides(Astro.cookies.get(FLAGS_COOKIE)?.value);
+const showMetrics   = isFlagEnabled(overrides, 'live-metrics');
+const showAgent     = isFlagEnabled(overrides, 'site-agent');
+const showWaitlist  = isFlagEnabled(overrides, 'waitlist-form');
+const showFeatureGrid = isFlagEnabled(overrides, 'feature-grid');
 ---
 
 <BaseLayout
@@ -34,7 +31,8 @@ const chessboardVariant = getVariant(assignments, 'chessboard');
   description="A SaaS curriculum for thinking beyond code. Learn to own outcomes across product, marketing, sales, and technology — starting on day one."
 >
   <Hero headlineVariant={headlineVariant} ctaVariant={ctaVariant} />
-  <FeatureGrid />
+
+  {showFeatureGrid && <FeatureGrid />}
 
   {chessboardVariant === 'simplified' ? (
     <section class="py-12">
@@ -65,17 +63,21 @@ const chessboardVariant = getVariant(assignments, 'chessboard');
     <ChessBoard3D client:load />
   )}
 
-  <CaseStudy>
-    <LiveMetrics client:load />
-  </CaseStudy>
+  {showMetrics && (
+    <CaseStudy>
+      <LiveMetrics client:load />
+    </CaseStudy>
+  )}
 
-  <SiteAgent client:load />
+  {showAgent && <SiteAgent client:load />}
 
-  <section class="py-16 text-center border-t border-gray-100">
-    <h2 class="text-2xl font-bold text-gray-900 mb-3">New modules dropping regularly</h2>
-    <p class="text-gray-600 mb-8 max-w-md mx-auto">
-      The curriculum is growing. Get notified when new lessons launch.
-    </p>
-    <WaitlistForm client:load source="homepage" />
-  </section>
+  {showWaitlist && (
+    <section class="py-16 text-center border-t border-gray-100">
+      <h2 class="text-2xl font-bold text-gray-900 mb-3">New modules dropping regularly</h2>
+      <p class="text-gray-600 mb-8 max-w-md mx-auto">
+        The curriculum is growing. Get notified when new lessons launch.
+      </p>
+      <WaitlistForm client:load source="homepage" />
+    </section>
+  )}
 </BaseLayout>
