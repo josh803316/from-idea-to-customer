@@ -4,6 +4,7 @@ import { cors } from '@elysiajs/cors';
 import { healthRoute } from './routes/health.route.ts';
 import { emailRoute } from './routes/email.route.ts';
 import { progressRoute } from './routes/progress.route.ts';
+import { modelsRoute } from './routes/models.route.ts';
 
 const PORT = Number(process.env.PORT ?? 4322);
 
@@ -22,6 +23,7 @@ const app = new Elysia()
   .use(healthRoute)
   .use(emailRoute)
   .use(progressRoute)
+  .use(modelsRoute)
   .onError(({ error, code, request }) => {
     const url = new URL(request.url);
     const msg = error instanceof Error ? error.message : String(error);

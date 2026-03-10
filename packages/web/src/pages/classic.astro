@@ -1,0 +1,83 @@
+---
+export const prerender = false;
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/home/Hero.astro';
+import FeatureGrid from '@/components/home/FeatureGrid.astro';
+import ChessBoard3D from '@/components/home/ChessBoard3D';
+import CaseStudy from '@/components/home/CaseStudy.astro';
+import LiveMetrics from '@/components/home/LiveMetrics';
+import SiteAgent from '@/components/home/SiteAgent';
+import WaitlistForm from '@/components/home/WaitlistForm';
+import { COOKIE_NAME, parseAssignments, getVariant } from '@/lib/experiments';
+import { FLAGS_COOKIE, parseOverrides, isFlagEnabled } from '@/lib/flags';
+
+// ── Experiment assignments ────────────────────────────────────────────────────
+const assignments = parseAssignments(Astro.cookies.get(COOKIE_NAME)?.value);
+const headlineVariant = getVariant(assignments, 'hero-headline') as 'control' | 'outcome' | 'direct';
+const ctaVariant      = getVariant(assignments, 'hero-cta') as 'control' | 'action' | 'curiosity';
+const chessboardVariant = getVariant(assignments, 'chessboard');
+
+// ── Feature flags ─────────────────────────────────────────────────────────────
+const overrides     = parseOverrides(Astro.cookies.get(FLAGS_COOKIE)?.value);
+const showMetrics   = isFlagEnabled(overrides, 'live-metrics');
+const showAgent     = isFlagEnabled(overrides, 'site-agent');
+const showWaitlist  = isFlagEnabled(overrides, 'waitlist-form');
+const showFeatureGrid = isFlagEnabled(overrides, 'feature-grid');
+---
+
+<BaseLayout
+  title="From Idea to Customer"
+  description="A SaaS curriculum for thinking beyond code. Learn to own outcomes across product, marketing, sales, and technology — starting on day one."
+>
+  <Hero headlineVariant={headlineVariant} ctaVariant={ctaVariant} />
+
+  {showAgent && <SiteAgent client:load />}
+
+  {showFeatureGrid && <FeatureGrid />}
+
+  {chessboardVariant === 'simplified' ? (
+    <section class="py-12">
+      <p class="text-center text-sm font-medium text-gray-400 uppercase tracking-widest mb-8">
+        …and in your tech product lifecycle and stack
+      </p>
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+          <div class="text-2xl mb-3">🟦</div>
+          <h3 class="font-bold text-gray-900 mb-2">OS Mode — Direct</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            You sell directly to end users. 5 dimensions to manage: customers, product, engineering,
+            marketing, and sales. Fast feedback loops. The board is visible.
+          </p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+          <div class="text-2xl mb-3">♟</div>
+          <h3 class="font-bold text-gray-900 mb-2">OEM Mode — Multiplied</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            You operate through channel partners, resellers, or platform operators. Those 5
+            dimensions multiply across every partner. The same problems exist — the board is just
+            bigger and harder to see.
+          </p>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <ChessBoard3D client:load />
+  )}
+
+  {showMetrics && (
+    <CaseStudy>
+      <LiveMetrics client:load />
+    </CaseStudy>
+  )}
+
+  {showWaitlist && (
+    <section class="py-16 text-center border-t border-gray-100">
+      <h2 class="text-2xl font-bold text-gray-900 mb-3">New modules dropping regularly</h2>
+      <p class="text-gray-600 mb-8 max-w-md mx-auto">
+        The curriculum is growing. Get notified when new lessons launch.
+      </p>
+      <WaitlistForm client:load source="homepage" />
+    </section>
+  )}
+</BaseLayout>
