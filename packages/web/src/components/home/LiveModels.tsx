@@ -130,8 +130,7 @@ export default function LiveModels() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const apiUrl = import.meta.env.PUBLIC_API_URL ?? 'http://localhost:4322';
-    fetch(`${apiUrl}/models`)
+    fetch('/api/models')
       .then((r) => r.json())
       .then((d: ModelsResponse) => setData(d))
       .catch(() => setError(true))
