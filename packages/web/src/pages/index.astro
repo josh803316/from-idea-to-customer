@@ -2,14 +2,10 @@
 export const prerender = false;
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ThenVsNow from '@/components/home/ThenVsNow.astro';
-import LiveModels from '@/components/home/LiveModels';
-import AIEcosystem from '@/components/home/AIEcosystem';
 import SiteAgent from '@/components/home/SiteAgent';
-import WaitlistForm from '@/components/home/WaitlistForm';
+import PersonaHomePage from '@/components/home/PersonaHomePage';
 import { FLAGS_COOKIE, parseOverrides, isFlagEnabled } from '@/lib/flags';
 
-// ── Feature flags ─────────────────────────────────────────────────────────────
 const overrides    = parseOverrides(Astro.cookies.get(FLAGS_COOKIE)?.value);
 const showAgent    = isFlagEnabled(overrides, 'site-agent');
 const showWaitlist = isFlagEnabled(overrides, 'waitlist-form');
@@ -17,9 +13,9 @@ const showWaitlist = isFlagEnabled(overrides, 'waitlist-form');
 
 <BaseLayout
   title="From Idea to Customer — AI-Native Development"
-  description="The way we build software has changed forever. Explore how AI-native development compresses months of work into hours, and learn to build products at the speed of thought."
+  description="The way we build software has changed forever. Explore the AI-native development era through the lens of your role — founder, engineer, designer, or any stakeholder in the stack."
 >
-  <!-- 1. HERO ────────────────────────────────────────────────────────────── -->
+  <!-- Hero ───────────────────────────────────────────────────────────────── -->
   <section class="py-20 text-center bg-gradient-to-b from-brand-50 to-white">
     <div class="max-w-3xl mx-auto px-4">
       <p class="text-xs font-semibold text-brand-600 uppercase tracking-widest mb-4">
@@ -30,8 +26,8 @@ const showWaitlist = isFlagEnabled(overrides, 'waitlist-form');
       </h1>
       <p class="text-lg text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
         We're living through the most significant shift in software creation since the internet.
-        AI doesn't just accelerate development — it changes who can build, what they build,
-        and how fast they can go from idea to customer.
+        Select your persona below — the entire guide adapts to your language, your workflow,
+        and your definition of done.
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
         <a
@@ -52,98 +48,6 @@ const showWaitlist = isFlagEnabled(overrides, 'waitlist-form');
 
   {showAgent && <SiteAgent client:load />}
 
-  <!-- 2. THE JOURNEY ──────────────────────────────────────────────────────── -->
-  <section class="bg-gray-50 border-y border-gray-100">
-    <ThenVsNow />
-  </section>
-
-  <!-- 3. FOUNDATION MODELS ───────────────────────────────────────────────── -->
-  <section class="py-16">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="text-center mb-10">
-        <p class="text-xs font-medium text-gray-400 uppercase tracking-widest mb-3">The brains</p>
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">Foundation Models</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">
-          Foundation models are the engines powering the AI revolution. These large language models
-          can write code, reason through complex problems, understand images, and generate creative
-          work — all through a simple API call.
-        </p>
-      </div>
-      <LiveModels client:load />
-    </div>
-  </section>
-
-  <!-- 4. FULL ECOSYSTEM ──────────────────────────────────────────────────── -->
-  <section id="ecosystem" class="py-16 bg-gray-50 border-t border-gray-100">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="text-center mb-10">
-        <p class="text-xs font-medium text-gray-400 uppercase tracking-widest mb-3">The map</p>
-        <h2 class="text-3xl font-bold text-gray-900 mb-4">The Full AI Ecosystem</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">
-          Foundation models are just the start. A rich ecosystem of tools — for coding, creativity,
-          automation, and orchestration — has emerged around them.
-        </p>
-      </div>
-      <AIEcosystem client:visible />
-    </div>
-  </section>
-
-  <!-- 5. HOW TO BUILD TODAY ──────────────────────────────────────────────── -->
-  <section class="py-16">
-    <div class="max-w-4xl mx-auto px-4">
-      <div class="text-center mb-12">
-        <p class="text-xs font-medium text-gray-400 uppercase tracking-widest mb-3">The method</p>
-        <h2 class="text-3xl font-bold text-gray-900">How to Build Today</h2>
-      </div>
-
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-0">
-        {[
-          { emoji: '💡', label: 'Idea', desc: 'Define the problem clearly' },
-          { emoji: '🤖', label: 'AI Scaffolds', desc: 'AI writes the initial code' },
-          { emoji: '👁️', label: 'You Review', desc: 'Verify, guide, and correct' },
-          { emoji: '🔗', label: 'AI Connects', desc: 'Wire up APIs and data' },
-          { emoji: '🚀', label: 'Ship', desc: 'Deploy and learn fast' },
-        ].map((step, i, arr) => (
-          <div class="flex sm:flex-col items-center sm:items-start gap-3 sm:gap-0 flex-1">
-            <div class="flex items-center gap-2 sm:flex-col sm:items-center sm:text-center w-full">
-              <div class="w-14 h-14 rounded-2xl bg-white border-2 border-gray-200 flex items-center justify-center text-2xl shadow-sm shrink-0">
-                {step.emoji}
-              </div>
-              <div class="sm:mt-3">
-                <p class="font-semibold text-gray-900 text-sm">{step.label}</p>
-                <p class="text-xs text-gray-500 mt-0.5">{step.desc}</p>
-              </div>
-            </div>
-            {i < arr.length - 1 && (
-              <div class="hidden sm:flex items-center justify-center w-8 self-start mt-4 shrink-0">
-                <span class="text-gray-300 text-xl font-light">→</span>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. WAITLIST ────────────────────────────────────────────────────────── -->
-  {showWaitlist && (
-    <section id="waitlist" class="py-16 text-center border-t border-gray-100">
-      <div class="max-w-md mx-auto px-4">
-        <h2 class="text-2xl font-bold text-gray-900 mb-3">Learn to Build This Way</h2>
-        <p class="text-gray-600 mb-8">
-          A curriculum for the AI-native era. Learn to ship real products using the tools and
-          workflows that define modern software development.
-        </p>
-        <WaitlistForm client:load source="homepage-ai-native" />
-      </div>
-    </section>
-  )}
-
-  <!-- Footer note ────────────────────────────────────────────────────────── -->
-  <div class="py-6 text-center border-t border-gray-100">
-    <p class="text-sm text-gray-400">
-      Looking for the original?
-      <a href="/classic" class="text-brand-600 hover:underline ml-1">View classic page →</a>
-    </p>
-  </div>
+  <!-- Persona-aware main content ────────────────────────────────────────── -->
+  <PersonaHomePage client:load showWaitlist={showWaitlist} />
 </BaseLayout>
