@@ -72,24 +72,18 @@ const OPENAI_FALLBACK: AIModel[] = [
   {
     id: 'gpt-4o',
     name: 'GPT-4o',
-    description: 'Most capable multimodal GPT model',
+    description: 'Flagship multimodal model',
     contextWindow: '128K',
     capabilities: ['reasoning', 'coding', 'vision', 'function-calling'],
     isLatest: true,
   },
   {
-    id: 'gpt-4-turbo',
-    name: 'GPT-4 Turbo',
-    description: 'High capability at lower cost',
+    id: 'gpt-4o-mini',
+    name: 'GPT-4o mini',
+    description: 'Fast and affordable multimodal model',
     contextWindow: '128K',
     capabilities: ['reasoning', 'coding', 'vision'],
-  },
-  {
-    id: 'gpt-3.5-turbo',
-    name: 'GPT-3.5 Turbo',
-    description: 'Fast and affordable for simple tasks',
-    contextWindow: '16K',
-    capabilities: ['summarization', 'chat', 'extraction'],
+    isLatest: true,
   },
   {
     id: 'o3',
@@ -102,7 +96,7 @@ const OPENAI_FALLBACK: AIModel[] = [
   {
     id: 'o4-mini',
     name: 'o4-mini',
-    description: 'Efficient reasoning model',
+    description: 'Efficient reasoning at lower cost',
     contextWindow: '200K',
     capabilities: ['reasoning', 'coding', 'math'],
     isLatest: true,
@@ -110,6 +104,14 @@ const OPENAI_FALLBACK: AIModel[] = [
 ];
 
 const GOOGLE_FALLBACK: AIModel[] = [
+  {
+    id: 'gemini-2.5-pro',
+    name: 'Gemini 2.5 Pro',
+    description: 'Most capable Gemini model with advanced reasoning',
+    contextWindow: '1M',
+    capabilities: ['reasoning', 'coding', 'vision', 'long-context'],
+    isLatest: true,
+  },
   {
     id: 'gemini-2.0-flash',
     name: 'Gemini 2.0 Flash',
@@ -119,42 +121,76 @@ const GOOGLE_FALLBACK: AIModel[] = [
     isLatest: true,
   },
   {
-    id: 'gemini-1.5-pro',
-    name: 'Gemini 1.5 Pro',
-    description: 'Advanced reasoning with large context',
-    contextWindow: '2M',
-    capabilities: ['reasoning', 'coding', 'vision', 'long-context'],
+    id: 'gemini-2.0-flash-thinking',
+    name: 'Gemini 2.0 Flash Thinking',
+    description: 'Flash variant with extended reasoning',
+    contextWindow: '1M',
+    capabilities: ['advanced-reasoning', 'coding', 'math'],
   },
   {
-    id: 'gemini-1.5-flash',
-    name: 'Gemini 1.5 Flash',
-    description: 'Fast and efficient',
-    contextWindow: '1M',
-    capabilities: ['summarization', 'classification', 'extraction'],
+    id: 'gemini-1.5-pro',
+    name: 'Gemini 1.5 Pro',
+    description: 'Previous generation with 2M token context',
+    contextWindow: '2M',
+    capabilities: ['reasoning', 'vision', 'long-context'],
   },
 ];
 
 const META_MODELS: AIModel[] = [
   {
-    id: 'llama-3.3-70b',
-    name: 'Llama 3.3 70B',
-    description: 'Open-weight instruction-tuned model',
-    contextWindow: '128K',
-    capabilities: ['reasoning', 'coding', 'multilingual'],
+    id: 'llama-4-maverick',
+    name: 'Llama 4 Maverick',
+    description: 'Llama 4 MoE model, strong multimodal reasoning',
+    contextWindow: '1M',
+    capabilities: ['reasoning', 'coding', 'vision', 'multilingual'],
     isLatest: true,
   },
   {
-    id: 'llama-3.2-90b-vision',
-    name: 'Llama 3.2 90B Vision',
-    description: 'Multimodal open-weight model',
-    contextWindow: '128K',
-    capabilities: ['vision', 'reasoning', 'analysis'],
+    id: 'llama-4-scout',
+    name: 'Llama 4 Scout',
+    description: 'Llama 4 MoE model optimized for speed and efficiency',
+    contextWindow: '10M',
+    capabilities: ['reasoning', 'coding', 'long-context'],
+    isLatest: true,
   },
   {
-    id: 'llama-3.1-405b',
-    name: 'Llama 3.1 405B',
-    description: 'Largest open-weight Llama model',
+    id: 'llama-3.3-70b',
+    name: 'Llama 3.3 70B',
+    description: 'Previous gen flagship open-weight model',
     contextWindow: '128K',
+    capabilities: ['reasoning', 'coding', 'multilingual'],
+  },
+];
+
+const MISTRAL_MODELS: AIModel[] = [
+  {
+    id: 'mistral-large-2',
+    name: 'Mistral Large 2',
+    description: 'Flagship model for complex reasoning and enterprise tasks',
+    contextWindow: '128K',
+    capabilities: ['reasoning', 'coding', 'multilingual', 'function-calling'],
+    isLatest: true,
+  },
+  {
+    id: 'mistral-small-3',
+    name: 'Mistral Small 3',
+    description: 'Efficient model for high-throughput enterprise workloads',
+    contextWindow: '32K',
+    capabilities: ['summarization', 'classification', 'extraction'],
+    isLatest: true,
+  },
+  {
+    id: 'codestral',
+    name: 'Codestral',
+    description: 'Specialized coding model optimized for code generation',
+    contextWindow: '32K',
+    capabilities: ['coding', 'code-completion', 'analysis'],
+  },
+  {
+    id: 'mixtral-8x22b',
+    name: 'Mixtral 8x22B',
+    description: 'Open-weight sparse mixture-of-experts model',
+    contextWindow: '64K',
     capabilities: ['reasoning', 'coding', 'multilingual'],
   },
 ];
@@ -169,11 +205,12 @@ const XAI_MODELS: AIModel[] = [
     isLatest: true,
   },
   {
-    id: 'grok-2-vision',
-    name: 'Grok 2 Vision',
-    description: 'Multimodal Grok model',
-    contextWindow: '32K',
-    capabilities: ['vision', 'reasoning', 'analysis'],
+    id: 'grok-3-mini',
+    name: 'Grok 3 Mini',
+    description: 'Efficient Grok model for everyday tasks',
+    contextWindow: '131K',
+    capabilities: ['reasoning', 'coding', 'real-time-data'],
+    isLatest: true,
   },
 ];
 
@@ -201,7 +238,7 @@ async function fetchOpenAIModels(): Promise<AIModel[]> {
 
   const json = (await res.json()) as { data: { id: string }[] };
   return json.data
-    .filter((m) => ['gpt-4', 'gpt-3.5', 'o1', 'o3', 'o4'].some((p) => m.id.startsWith(p)))
+    .filter((m) => ['gpt-4o', 'o1', 'o3', 'o4'].some((p) => m.id.startsWith(p)))
     .slice(0, 8)
     .map((m) => ({
       id: m.id,
@@ -284,6 +321,13 @@ export const GET: APIRoute = async () => {
       slug: 'xai',
       emoji: '⚡',
       models: XAI_MODELS,
+      source: 'fallback',
+    },
+    {
+      name: 'Mistral AI',
+      slug: 'mistral',
+      emoji: '🌬️',
+      models: MISTRAL_MODELS,
       source: 'fallback',
     },
   ];

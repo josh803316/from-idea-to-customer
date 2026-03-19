@@ -31,7 +31,9 @@ const CATEGORIES: Category[] = [
       { name: 'Claude', emoji: '🟣', org: 'Anthropic' },
       { name: 'Gemini', emoji: '🔵', org: 'Google' },
       { name: 'Grok', emoji: '⚡', org: 'xAI' },
-      { name: 'Llama', emoji: '🦙', org: 'Meta' },
+      { name: 'Llama 4', emoji: '🦙', org: 'Meta' },
+      { name: 'DeepSeek', emoji: '🐋', org: 'DeepSeek' },
+      { name: 'Mistral', emoji: '🌬️', org: 'Mistral AI' },
     ],
   },
   {
@@ -45,9 +47,9 @@ const CATEGORIES: Category[] = [
     tools: [
       { name: 'Copilot', emoji: '🐙', org: 'GitHub' },
       { name: 'Cursor', emoji: '🖱️', org: 'Cursor AI' },
+      { name: 'Windsurf', emoji: '🏄', org: 'Codeium' },
+      { name: 'Claude Code', emoji: '🟣', org: 'Anthropic' },
       { name: 'Continue', emoji: '▶️', org: 'Continue.dev' },
-      { name: 'Cody', emoji: '🦊', org: 'Sourcegraph' },
-      { name: 'Codex', emoji: '📝', org: 'OpenAI' },
     ],
   },
   {
@@ -60,8 +62,8 @@ const CATEGORIES: Category[] = [
     },
     tools: [
       { name: 'LangChain', emoji: '⛓️', org: 'LangChain' },
+      { name: 'LlamaIndex', emoji: '🦙', org: 'LlamaIndex' },
       { name: 'CrewAI', emoji: '👥', org: 'CrewAI' },
-      { name: 'AutoGPT', emoji: '🤖', org: 'Significant Gravitas' },
       { name: 'n8n', emoji: '🔌', org: 'n8n' },
       { name: 'Zapier AI', emoji: '⚡', org: 'Zapier' },
     ],
@@ -78,7 +80,7 @@ const CATEGORIES: Category[] = [
       { name: 'Midjourney', emoji: '🌌', org: 'Midjourney' },
       { name: 'DALL-E 3', emoji: '🖼️', org: 'OpenAI' },
       { name: 'Sora', emoji: '🎬', org: 'OpenAI' },
-      { name: 'Stable Diffusion', emoji: '🎭', org: 'Stability AI' },
+      { name: 'Flux', emoji: '🎭', org: 'Black Forest Labs' },
       { name: 'Runway', emoji: '✈️', org: 'Runway' },
     ],
   },

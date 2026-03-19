@@ -58,6 +58,12 @@ const providerColors: Record<string, { bg: string; border: string; badge: string
       badge: 'bg-gray-100 text-gray-700',
       text: 'text-gray-700',
     },
+    mistral: {
+      bg: 'bg-orange-50',
+      border: 'border-orange-200',
+      badge: 'bg-orange-100 text-orange-700',
+      text: 'text-orange-700',
+    },
   };
 
 function ProviderSection({ provider }: { provider: AIProvider }) {
