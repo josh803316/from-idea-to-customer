@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const courses = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/courses' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -15,7 +16,7 @@ const courses = defineCollection({
 });
 
 const modules = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/modules' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -26,7 +27,7 @@ const modules = defineCollection({
 });
 
 const lessons = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/lessons' }),
   schema: z.object({
     title: z.string(),
     moduleSlug: z.string(),

@@ -25,7 +25,7 @@ const crumbs = [{ label: 'Courses', href: '/courses' }];
     <div class="grid gap-6">
       {courses.map((course) => (
         <a
-          href={`/courses/${course.slug}`}
+          href={`/courses/${course.id}`}
           class="group block bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-brand-200 transition-all"
         >
           <div class="flex items-start justify-between gap-4">

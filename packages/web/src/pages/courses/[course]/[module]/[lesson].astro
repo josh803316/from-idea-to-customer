@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import LessonLayout from '@/layouts/LessonLayout.astro';
 
 export async function getStaticPaths() {
@@ -8,14 +8,14 @@ export async function getStaticPaths() {
   const modules = await getCollection('modules');
 
   return lessons.map((lesson) => {
-    // lesson.slug = "idea-to-customer/module-01-thinking-like-a-pm/lesson-01"
-    const parts = lesson.slug.split('/');
+    // lesson.id = "idea-to-customer/module-01-thinking-like-a-pm/lesson-01"
+    const parts = lesson.id.split('/');
     const courseSlug = parts[0];
     const moduleSlug = parts[1];
     const lessonFile = parts[2];
 
-    const course = courses.find((c) => c.slug === courseSlug);
-    const mod = modules.find((m) => m.slug.endsWith(moduleSlug));
+    const course = courses.find((c) => c.id === courseSlug);
+    const mod = modules.find((m) => m.id.endsWith(moduleSlug));
 
     return {
       params: { course: courseSlug, module: moduleSlug, lesson: lessonFile },
@@ -25,7 +25,7 @@ export async function getStaticPaths() {
 }
 
 const { lesson, course, mod } = Astro.props;
-const { Content } = await lesson.render();
+const { Content } = await render(lesson);
 ---
 
 <LessonLayout
@@ -35,7 +35,7 @@ const { Content } = await lesson.render();
   courseTitle={course?.data.title ?? lesson.data.courseSlug}
   moduleSlug={lesson.data.moduleSlug}
   moduleTitle={mod?.data.title ?? lesson.data.moduleSlug}
-  lessonSlug={lesson.slug}
+  lessonSlug={lesson.id}
   estimatedMinutes={lesson.data.estimatedMinutes}
   objectives={lesson.data.objectives}
 >
