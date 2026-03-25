@@ -8,7 +8,7 @@ import CourseProgress from '@/components/course/CourseProgress';
 export async function getStaticPaths() {
   const courses = await getCollection('courses', ({ data }) => !data.draft);
   return courses.map((course) => ({
-    params: { course: course.slug },
+    params: { course: course.id },
     props: { course },
   }));
 }
@@ -16,16 +16,16 @@ export async function getStaticPaths() {
 const { course } = Astro.props;
 
 const allModules = (
-  await getCollection('modules', ({ data }) => data.courseSlug === course.slug && !data.draft)
+  await getCollection('modules', ({ data }) => data.courseSlug === course.id && !data.draft)
 ).sort((a, b) => a.data.order - b.data.order);
 
 const allLessons = (
-  await getCollection('lessons', ({ data }) => data.courseSlug === course.slug && !data.draft)
+  await getCollection('lessons', ({ data }) => data.courseSlug === course.id && !data.draft)
 ).sort((a, b) => a.data.order - b.data.order);
 
 const crumbs = [
   { label: 'Courses', href: '/courses' },
-  { label: course.data.title, href: `/courses/${course.slug}` },
+  { label: course.data.title, href: `/courses/${course.id}` },
 ];
 ---
 
@@ -51,24 +51,24 @@ const crumbs = [
     <h1 class="text-4xl font-bold text-gray-900 mb-4">{course.data.title}</h1>
     <p class="text-xl text-gray-600 mb-8">{course.data.description}</p>
 
-    <CourseProgress client:load courseSlug={course.slug} totalLessons={allLessons.length} />
+    <CourseProgress client:load courseSlug={course.id} totalLessons={allLessons.length} />
 
     <div class="space-y-8">
       {allModules.map((mod) => {
         const moduleLessons = allLessons.filter(
-          (l) => l.data.moduleSlug === mod.slug.split('/').at(-1),
+          (l) => l.data.moduleSlug === mod.id.split('/').at(-1),
         );
         return (
-          <div id={mod.slug.split('/').at(-1)}>
+          <div id={mod.id.split('/').at(-1)}>
             <h2 class="text-xl font-semibold text-gray-900 mb-1">{mod.data.title}</h2>
             <p class="text-gray-600 text-sm mb-4">{mod.data.description}</p>
             <ol class="space-y-2">
               {moduleLessons.map((lesson) => {
-                const [, modSlug, lessonFile] = lesson.slug.split('/');
+                const [, modSlug, lessonFile] = lesson.id.split('/');
                 return (
                   <li>
                     <a
-                      href={`/courses/${course.slug}/${modSlug}/${lessonFile}`}
+                      href={`/courses/${course.id}/${modSlug}/${lessonFile}`}
                       class="flex items-center justify-between group bg-white border border-gray-100 rounded-lg px-4 py-3 hover:border-brand-200 hover:shadow-sm transition-all"
                     >
                       <div class="flex items-center gap-3">
