@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import { PERSONAS, getPersona, DEFAULT_PERSONA_SLUG } from '@/lib/personas';
 import type { Persona } from '@/lib/personas';
 import PersonaOrbit from './PersonaOrbit';
-import LiveModels from './LiveModels';
 import AIEcosystem from './AIEcosystem';
 
 // ── Section: Persona selector ─────────────────────────────────────────────────
@@ -147,27 +146,6 @@ function SectionJourney({ persona }: { persona: Persona }) {
             "{journey.insight}"
           </p>
         </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Section: Foundation Models ────────────────────────────────────────────────
-
-function SectionModels({ persona }: { persona: Persona }) {
-  return (
-    <section className="py-16">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-3">
-            The brains
-          </p>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Foundation Models</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-sm leading-relaxed">
-            {persona.content.modelsIntro}
-          </p>
-        </div>
-        <LiveModels />
       </div>
     </section>
   );
@@ -349,10 +327,7 @@ export default function PersonaHomePage({ showWaitlist }: PersonaHomePageProps) 
         {/* Section 2: Journey */}
         <SectionJourney persona={persona} />
 
-        {/* Section 3: Foundation Models */}
-        <SectionModels persona={persona} />
-
-        {/* Section 4: Ecosystem (static, no key needed but inside key div) */}
+        {/* Section 3: Ecosystem (static, no key needed but inside key div) */}
         <SectionEcosystem />
 
         {/* Section 5: How to Build Today */}
