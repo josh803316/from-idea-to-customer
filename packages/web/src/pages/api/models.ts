@@ -30,17 +30,17 @@ export interface ModelsResponse {
 
 const ANTHROPIC_MODELS: AIModel[] = [
   {
-    id: 'claude-opus-4-6',
-    name: 'Claude Opus 4.6',
-    description: 'Most capable Claude model for complex tasks',
+    id: 'claude-opus-4-7',
+    name: 'Claude Opus 4.7',
+    description: 'Most powerful Claude — frontier reasoning and agentic tasks',
     contextWindow: '200K',
-    capabilities: ['reasoning', 'coding', 'analysis', 'vision'],
+    capabilities: ['reasoning', 'coding', 'analysis', 'vision', 'agents'],
     isLatest: true,
   },
   {
     id: 'claude-sonnet-4-6',
     name: 'Claude Sonnet 4.6',
-    description: 'Balanced performance and speed',
+    description: 'Balanced performance and speed for most workloads',
     contextWindow: '200K',
     capabilities: ['reasoning', 'coding', 'analysis', 'vision'],
     isLatest: true,
@@ -48,7 +48,7 @@ const ANTHROPIC_MODELS: AIModel[] = [
   {
     id: 'claude-haiku-4-5',
     name: 'Claude Haiku 4.5',
-    description: 'Fast and lightweight for simple tasks',
+    description: 'Fast and lightweight for high-throughput tasks',
     contextWindow: '200K',
     capabilities: ['summarization', 'classification', 'extraction'],
   },
@@ -59,36 +59,29 @@ const ANTHROPIC_MODELS: AIModel[] = [
     contextWindow: '200K',
     capabilities: ['reasoning', 'coding', 'analysis', 'vision'],
   },
-  {
-    id: 'claude-3-opus-20240229',
-    name: 'Claude 3 Opus',
-    description: 'Previous generation most capable model',
-    contextWindow: '200K',
-    capabilities: ['reasoning', 'coding', 'analysis', 'vision'],
-  },
 ];
 
 const OPENAI_FALLBACK: AIModel[] = [
   {
-    id: 'gpt-4o',
-    name: 'GPT-4o',
-    description: 'Flagship multimodal model',
-    contextWindow: '128K',
+    id: 'gpt-4.1',
+    name: 'GPT-4.1',
+    description: 'Latest flagship model — best coding and instruction following',
+    contextWindow: '1M',
     capabilities: ['reasoning', 'coding', 'vision', 'function-calling'],
     isLatest: true,
   },
   {
-    id: 'gpt-4o-mini',
-    name: 'GPT-4o mini',
-    description: 'Fast and affordable multimodal model',
+    id: 'gpt-4o',
+    name: 'GPT-4o',
+    description: 'Fast multimodal model with vision and audio',
     contextWindow: '128K',
-    capabilities: ['reasoning', 'coding', 'vision'],
+    capabilities: ['reasoning', 'coding', 'vision', 'audio'],
     isLatest: true,
   },
   {
     id: 'o3',
     name: 'o3',
-    description: 'Advanced reasoning model',
+    description: 'Advanced reasoning model for hard problems',
     contextWindow: '200K',
     capabilities: ['advanced-reasoning', 'coding', 'math'],
     isLatest: true,
@@ -107,25 +100,25 @@ const GOOGLE_FALLBACK: AIModel[] = [
   {
     id: 'gemini-2.5-pro',
     name: 'Gemini 2.5 Pro',
-    description: 'Most capable Gemini model with advanced reasoning',
+    description: 'Most capable Gemini — best-in-class coding and long context',
     contextWindow: '1M',
     capabilities: ['reasoning', 'coding', 'vision', 'long-context'],
     isLatest: true,
   },
   {
-    id: 'gemini-2.0-flash',
-    name: 'Gemini 2.0 Flash',
-    description: 'Fast multimodal model',
+    id: 'gemini-2.5-flash',
+    name: 'Gemini 2.5 Flash',
+    description: 'Fast and affordable with strong reasoning',
     contextWindow: '1M',
     capabilities: ['reasoning', 'coding', 'vision', 'audio'],
     isLatest: true,
   },
   {
-    id: 'gemini-2.0-flash-thinking',
-    name: 'Gemini 2.0 Flash Thinking',
-    description: 'Flash variant with extended reasoning',
+    id: 'gemini-2.0-flash',
+    name: 'Gemini 2.0 Flash',
+    description: 'Versatile multimodal model with real-time capabilities',
     contextWindow: '1M',
-    capabilities: ['advanced-reasoning', 'coding', 'math'],
+    capabilities: ['reasoning', 'coding', 'vision', 'real-time'],
   },
   {
     id: 'gemini-1.5-pro',
@@ -211,6 +204,51 @@ const XAI_MODELS: AIModel[] = [
     contextWindow: '131K',
     capabilities: ['reasoning', 'coding', 'real-time-data'],
     isLatest: true,
+  },
+];
+
+const KIMI_MODELS: AIModel[] = [
+  {
+    id: 'kimi-k2',
+    name: 'Kimi K2',
+    description: 'Open-source 1T MoE — frontier agentic and tool-use capabilities',
+    contextWindow: '1M',
+    capabilities: ['reasoning', 'coding', 'agents', 'tool-use', 'multilingual'],
+    isLatest: true,
+  },
+  {
+    id: 'kimi-k1.5',
+    name: 'Kimi K1.5',
+    description: 'Long-thinking reasoning model rivaling o1',
+    contextWindow: '128K',
+    capabilities: ['advanced-reasoning', 'math', 'coding', 'multilingual'],
+    isLatest: true,
+  },
+];
+
+const DEEPSEEK_MODELS: AIModel[] = [
+  {
+    id: 'deepseek-r1-0528',
+    name: 'DeepSeek-R1-0528',
+    description: 'Latest reasoning model — near-frontier performance open-source',
+    contextWindow: '128K',
+    capabilities: ['advanced-reasoning', 'math', 'coding'],
+    isLatest: true,
+  },
+  {
+    id: 'deepseek-v3-0324',
+    name: 'DeepSeek-V3-0324',
+    description: 'Flagship MoE model matching top closed models at low cost',
+    contextWindow: '128K',
+    capabilities: ['reasoning', 'coding', 'multilingual', 'function-calling'],
+    isLatest: true,
+  },
+  {
+    id: 'deepseek-r1',
+    name: 'DeepSeek-R1',
+    description: 'Original open-source reasoning model, MIT license',
+    contextWindow: '128K',
+    capabilities: ['advanced-reasoning', 'math', 'coding'],
   },
 ];
 
@@ -308,6 +346,20 @@ export const GET: APIRoute = async () => {
       emoji: '🔵',
       models: googleResult.status === 'fulfilled' ? googleResult.value : GOOGLE_FALLBACK,
       source: googleResult.status === 'fulfilled' ? 'live' : 'fallback',
+    },
+    {
+      name: 'Kimi / Moonshot AI',
+      slug: 'kimi',
+      emoji: '🌙',
+      models: KIMI_MODELS,
+      source: 'fallback',
+    },
+    {
+      name: 'DeepSeek',
+      slug: 'deepseek',
+      emoji: '🐋',
+      models: DEEPSEEK_MODELS,
+      source: 'fallback',
     },
     {
       name: 'Meta / Llama',

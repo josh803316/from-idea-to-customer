@@ -64,6 +64,18 @@ const providerColors: Record<string, { bg: string; border: string; badge: string
       badge: 'bg-orange-100 text-orange-700',
       text: 'text-orange-700',
     },
+    kimi: {
+      bg: 'bg-violet-50',
+      border: 'border-violet-200',
+      badge: 'bg-violet-100 text-violet-700',
+      text: 'text-violet-700',
+    },
+    deepseek: {
+      bg: 'bg-cyan-50',
+      border: 'border-cyan-200',
+      badge: 'bg-cyan-100 text-cyan-700',
+      text: 'text-cyan-700',
+    },
   };
 
 function ProviderSection({ provider }: { provider: AIProvider }) {

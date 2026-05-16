@@ -4,6 +4,7 @@ export const prerender = false;
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SiteAgent from '@/components/home/SiteAgent';
 import PersonaHomePage from '@/components/home/PersonaHomePage';
+import LiveModels from '@/components/home/LiveModels';
 import { FLAGS_COOKIE, parseOverrides, isFlagEnabled } from '@/lib/flags';
 
 const overrides    = parseOverrides(Astro.cookies.get(FLAGS_COOKIE)?.value);
@@ -43,6 +44,24 @@ const showWaitlist = isFlagEnabled(overrides, 'waitlist-form');
           Join Waitlist
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- Foundation Models ──────────────────────────────────────────────────── -->
+  <section class="py-12 bg-white border-t border-gray-100">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-8">
+        <p class="text-xs font-semibold text-brand-600 uppercase tracking-widest mb-2">
+          The models powering the shift
+        </p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">
+          Foundation Models — Right Now
+        </h2>
+        <p class="text-gray-500 mt-2 text-sm max-w-xl mx-auto">
+          From Anthropic, OpenAI, and Google to open challengers like Kimi K2 and DeepSeek — the frontier moves fast.
+        </p>
+      </div>
+      <LiveModels client:load />
     </div>
   </section>
 
