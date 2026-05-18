@@ -9,4 +9,5 @@ packages/**/.env.local
 playwright-report/
 test-results/
 coverage/
-*.tsbuildinfo
+*.tsbuildinfo	
+.claude/settings.local.json
