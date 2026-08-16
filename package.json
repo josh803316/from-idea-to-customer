@@ -12,7 +12,7 @@
     "db:migrate": "bun run --cwd packages/api db:migrate"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^10.0.5"
   },
   "overrides": {
     "@sinclair/typebox": "^0.34.0"
